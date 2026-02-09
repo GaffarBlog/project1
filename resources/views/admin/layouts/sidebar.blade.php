@@ -20,7 +20,7 @@
              <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation" aria-label="Main navigation" data-accordion="false" id="navigation">
                  @foreach (sidebarList() as $key => $item)
                      @if (is_multidimensional_array($item))
-                         <li class="nav-item menu-open">
+                         <li class="nav-item {{ is_active_sidebar($item) }}">
                              <a href="#" class="nav-link">
                                  <i class="nav-icon {{ $item['icon'] }}"></i>
                                  <p>{{ $key }}</p>
@@ -43,7 +43,7 @@
                          </li>
                      @else
                          <li class="nav-item">
-                             <a href="{{ route($item['route']) }}" class="nav-link">
+                             <a href="{{ route($item['route']) }}" class="nav-link {{ is_active_menu($item['route']) }}">
                                  <i class="nav-icon {{ $item['icon'] }}"></i>
                                  <p>{{ $key }}</p>
                              </a>

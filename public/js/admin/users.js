@@ -2,13 +2,14 @@ $(document).ready(function () {
     $(".edit_btn").on("click", function () {
         const id = $(this).data("id");
         $.ajax({
-            url: route("admin.user-role.edit", { id: id }),
+            url: route("admin.users.edit", { id: id }),
             method: "GET",
-            success: ({ role, status }) => {
+            success: ({ user, status }) => {
                 if (status) {
-                    $("#editId").val(role.id);
-                    $("#editUserRole").val(role.name);
-                    $("#editUserDescription").val(role.description);
+                    $("#editId").val(user.id);
+                    $("#editUserName").val(user.name);
+                    $("#editUserEmail").val(user.email);
+                    $("#editUserAddress").val(user.address);
                     $("#editModal").modal("show");
                 }
             },

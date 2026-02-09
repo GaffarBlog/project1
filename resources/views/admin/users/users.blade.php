@@ -124,20 +124,33 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit User Role</h5>
+                    <h5 class="modal-title">Edit User</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('admin.user-role.update') }}" method="POST">
+                <form action="{{ route('admin.users.update') }}" method="POST">
                     @csrf
                     <input type="hidden" name="id" id="editId">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="editUserRole" class="form-label">Role</label>
-                            <input type="text" class="form-control" id="editUserRole" name="name">
+                            <label for="editUserName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="editUserName" name="name">
                         </div>
                         <div class="form-group mt-3">
-                            <label for="editUserDescription" class="form-label">Description</label>
-                            <input type="text" class="form-control" id="editUserDescription" name="description">
+                            <label for="editUserEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="editUserEmail" name="email">
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="editUserAddress" class="form-label">Address</label>
+                            <textarea name="address" id="editUserAddress" class="form-control" rows="5"></textarea>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="editUserRole" class="form-label">User Role</label>
+                            <select name="role_id" id="editUserRole" class="form-control">
+                                <option selected disabled>Select Role</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">

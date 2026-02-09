@@ -47,6 +47,5 @@ function is_active_sidebar($menuItems)
 function is_active_menu($routeName)
 {
     $currentRoute = request()->route()?->getName();
-
     return $currentRoute === $routeName ? 'active' : '';
 }
