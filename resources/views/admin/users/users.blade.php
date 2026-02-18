@@ -23,7 +23,7 @@
             <div class="card card-primary card-outline mb-4">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
-                        <div class="card-title">User Roles List: {{ $users->count() }}</div>
+                        <div class="card-title">Users: {{ $users->total() }}</div>
                         <button class="btn btn-primary btn-sm create-btn"><i class="bi bi-plus-lg"></i> Create</button>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                         <tbody>
                             @foreach ($users as $item)
                                 <tr class="align-middle">
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $users->perPage() * ($users->currentPage() - 1) + $loop->iteration }}</td>
                                     <td style="width: 50px">
                                         @if ($item->avatar)
                                             <img src="{{ asset('storage/uploads/users/' . $item->avatar) }}" alt="">
@@ -126,14 +126,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Delete User Role</h5>
+                    <h5 class="modal-title">Delete User</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('admin.user-role.delete') }}" method="POST">
+                <form action="{{ route('admin.users.delete') }}" method="POST">
                     @csrf
                     <input type="hidden" name="id" id="deleteId">
                     <div class="modal-body">
-                        <p>Are you sure you want to delete this user role?</p>
+                        <p>Are you sure you want to delete this user?</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

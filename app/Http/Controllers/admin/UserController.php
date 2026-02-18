@@ -69,6 +69,6 @@ class UserController extends Controller
             'id' => 'required|exists:users,id',
         ]);
         User::findOrFail($request->id)->delete();
-        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+        return redirect()->back()->with('success', 'User deleted successfully.');
     }
 }

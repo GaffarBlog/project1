@@ -21,6 +21,6 @@ class UserSeeder extends Seeder
             "password" => Hash::make("123456"),
             "type" => "Admin",
         ]);
-        User::factory()->count(50)->create();
+        User::factory()->count(500)->create();
     }
 }
