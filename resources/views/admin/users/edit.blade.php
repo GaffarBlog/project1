@@ -42,8 +42,50 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label for="userUsername" class="form-label">Username</label>
+                                <input type="text" value="{{ $user->username }}" class="form-control" id="userUsername" required name="username">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label for="userPhone" class="form-label">Phone</label>
                                 <input type="text" value="{{ $user->phone }}" class="form-control" id="userPhone" name="phone">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="userDateOfBirth" class="form-label">Date of Birth</label>
+                                <input type="date" value="{{ $user->date_of_birth }}" class="form-control" id="userDateOfBirth" name="date_of_birth">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="userGender" class="form-label">Gender</label>
+                                <select class="form-control" id="userGender" required name="gender">
+                                    <option selected disabled value="">Select Gender</option>
+                                    <option @selected($user->gender === 'Male') value="Male">Male</option>
+                                    <option @selected($user->gender === 'Female') value="Female">Female</option>
+                                    <option @selected($user->gender === 'Third Gender') value="Third Gender">Third Gender</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="userCountry" class="form-label">Country</label>
+                                <input type="text" value="{{ $user->country }}" class="form-control" id="userCountry" name="country">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="userCity" class="form-label">City</label>
+                                <input type="text" value="{{ $user->city }}" class="form-control" id="userCity" name="city">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="userZipCode" class="form-label">Zip Code</label>
+                                <input type="text" value="{{ $user->zip }}" class="form-control" id="userZipCode" name="zip">
                             </div>
                         </div>
                         <div class="col-md-6">

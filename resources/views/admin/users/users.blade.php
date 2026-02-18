@@ -35,6 +35,7 @@
                                 <th scope="col">Avatar</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
+                                <th scope="col">Gender</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Type</th>
                                 <th scope="col">Action</th>
@@ -53,6 +54,7 @@
                                     </td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
+                                    <td>{{ $item->gender }}</td>
                                     <td>
                                         @if ($item->status === 'Active')
                                             <span class="badge text-bg-success">Active</span>

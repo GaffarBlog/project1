@@ -24,9 +24,20 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $email = fake()->unique()->safeEmail();
         return [
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'email' => $email,
+            'username' => $email,
+            'phone' => fake()->phoneNumber(),
+            'date_of_birth' => fake()->date(),
+            'gender' => fake()->randomElement(['Male', 'Female']),
+            'country' => fake()->country(),
+            'city' => fake()->city(),
+            'zip' => fake()->postcode(),
+            'address' => fake()->address(),
+            'status' => fake()->randomElement(['Active', 'Inactive', 'Banned']),
+            'type' => 'User',
             'email_verified_at' => Carbon::now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
