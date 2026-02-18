@@ -13,8 +13,9 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('id', 'desc')->paginate(20);
-        return view('admin.users.users', compact('users'));
+        $users = User::paginate(20);
+        $roles = Role::all();
+        return view('admin.users.users', compact('users', 'roles'));
     }
 
     public function create(Request $request)
@@ -48,7 +49,8 @@ class UserController extends Controller
             'id' => 'required|exists:users,id',
             'name' => 'required|string|max:255|unique:users,name,' . $request->id,
             'email' => 'required|email|unique:users,email,' . $request->id,
-            'password' => 'nullable|string|min:8|confirmed',
+            'address' => 'nullable|string',
+            'role_id' => 'nullable|exists:roles,id',
         ]);
         $user = User::findOrFail($request->id);
         $user->update([
