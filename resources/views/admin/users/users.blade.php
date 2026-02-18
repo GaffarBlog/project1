@@ -63,7 +63,7 @@
                                     <td>{{ $item->type }}</td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-primary edit_btn" data-id="{{ $item->id }}"><i class="bi bi-pencil-square"></i></button>
+                                            <a href="{{ route('admin.users.edit', $item->id) }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
                                             <button class="btn btn-danger delete_btn" data-id="{{ $item->id }}"><i class="bi bi-trash"></i></button>
                                         </div>
                                     </td>
@@ -111,35 +111,6 @@
                         </div>
                     </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--------Edit Modal---------->
-    <div class="modal" id="editModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit User Role</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('admin.user-role.update') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="id" id="editId">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="editUserRole" class="form-label">Role</label>
-                            <input type="text" class="form-control" id="editUserRole" name="name">
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="editUserDescription" class="form-label">Description</label>
-                            <input type="text" class="form-control" id="editUserDescription" name="description">
-                        </div>
-                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>

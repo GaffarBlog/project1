@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::paginate(20);
+        $users = User::orderBy('id', 'desc')->paginate(20);
         return view('admin.users.users', compact('users'));
     }
 
@@ -38,7 +38,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return response()->json(['user' => $user, 'status' => true]);
+        return view('admin.users.edit', compact('user'));
     }
 
     public function update(Request $request)
