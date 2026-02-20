@@ -37,11 +37,10 @@ class UserFactory extends Factory
             'zip' => fake()->postcode(),
             'address' => fake()->address(),
             'status' => fake()->randomElement(['Active', 'Inactive', 'Banned']),
-            'type' => 'User',
+            'role_id' => rand(1, 4),
             'email_verified_at' => Carbon::now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            'address' => fake()->address(),
         ];
     }
 

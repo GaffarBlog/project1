@@ -17,7 +17,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $route_name = $request->route()?->getName();
-        if (Auth::check() && Auth::user()->type === "Admin") {
+        if (Auth::check() && Auth::user()->role_id === 1) {
             if ($route_name === 'admin.login.index') {
                 return redirect()->route('admin.dashboard.index');
             } else {

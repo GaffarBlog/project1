@@ -17,6 +17,8 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous" />
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}" />
+    <!---- custom css linked ---->
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
     <!--end::Required Plugin(AdminLTE)-->
     @routes
     @stack('css')

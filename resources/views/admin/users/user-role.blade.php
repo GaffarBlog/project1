@@ -59,6 +59,8 @@
         </div>
     </section>
 
+
+    <!--------Edit Modal---------->
     <div class="modal" id="editModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -87,6 +89,7 @@
             </div>
         </div>
     </div>
+    <!--------Delete Modal---------->
     <div class="modal" id="deleteModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -108,6 +111,7 @@
             </div>
         </div>
     </div>
+    <!--------Create Modal---------->
     <div class="modal" id="createModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -121,6 +125,10 @@
                         <div class="form-group">
                             <label for="userRole" class="form-label">Role</label>
                             <input type="text" class="form-control" id="userRole" required name="name">
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="userDescription" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="userDescription" name="description">
                         </div>
                     </div>
 

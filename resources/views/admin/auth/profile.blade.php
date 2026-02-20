@@ -27,12 +27,12 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                <img class="img-fluid rounded-circle" src="{{ asset('assets/img/user4-128x128.jpg') }}" alt="User profile picture">
+                                <img class="img-fluid rounded-circle img-preview" src="{{ isset($user->images['webp']) ? $user->images['webp'] : asset('assets/img/user-avatar.png') }}" alt="User profile picture">
                             </div>
 
                             <h3 class="text-center mt-2">{{ $user->name }}</h3>
 
-                            <p class="text-muted text-center">Software Engineer</p>
+                            <p class="text-muted text-center">{{$user->Role->name}}</p>
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">

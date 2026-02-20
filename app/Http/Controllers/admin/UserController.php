@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Image\Image;
 
 class UserController extends Controller
 {
@@ -39,24 +40,60 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('admin.users.edit', compact('user'));
+        // return $user;
+        $roles = Role::select("id", "name")->get();
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     public function update(Request $request)
     {
-        // Validate the request data
         $request->validate([
-            'id' => 'required|exists:users,id',
-            'name' => 'required|string|max:255|unique:users,name,' . $request->id,
-            'email' => 'required|email|unique:users,email,' . $request->id,
-            'address' => 'nullable|string',
-            'role_id' => 'nullable|exists:roles,id',
+            "id" => "required|exists:users,id",
+            "name" => "required|string|max:255|unique:users,name," . $request->id,
+            "email" => "required|email|unique:users,email," . $request->id,
+            "password" => "nullable|string|min:6|confirmed",
+            "role_id" => "required|exists:roles,id",
+            "status" => "required|in:Active,Inactive,Banned",
+            "address" => "nullable|string|max:1000",
+            "country" => "nullable|string|max:255",
+            "city" => "nullable|string|max:255",
+            "zip" => "nullable|string|max:10",
+            "phone" => "nullable|string|max:16",
+            "date_of_birth" => "nullable|date",
+            "gender" => "nullable|in:Male,Female,Third Gender",
+
         ]);
         $user = User::findOrFail($request->id);
+        $images = $user->images;
+        if ($request->file("avatar")) {
+            $avatar = $request->file("avatar");
+            $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+            $avatar->move('storage/uploads/users', $avatarName);
+            $path = 'storage/uploads/users/' . $avatarName;
+            $images["original"] = asset($path);
+            $webp_path = public_path('storage/uploads/users/webp/' . Str::replaceLast('.' . $avatar->getClientOriginalExtension(), '.webp', $avatarName));
+            Image::load(public_path($path))
+                ->format('webp')
+                ->quality(80)
+                ->save($webp_path);
+
+            $images["webp"] = asset('storage/uploads/users/webp/' . Str::replaceLast('.' . $avatar->getClientOriginalExtension(), '.webp', $avatarName));
+        }
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password ? Hash::make($request->password) : $user->password
+            'username' => $request->username,
+            'password' => $request->password ? Hash::make($request->password) : $user->password,
+            'role_id' => $request->role_id,
+            'status' => $request->status,
+            'address' => $request->address,
+            'country' => $request->country,
+            'city' => $request->city,
+            'zip' => $request->zip,
+            'phone' => $request->phone,
+            'date_of_birth' => $request->date_of_birth,
+            'gender' => $request->gender,
+            'images' => $images
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');

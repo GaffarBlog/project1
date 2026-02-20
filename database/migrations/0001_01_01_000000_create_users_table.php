@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('avatar')->nullable();
+            $table->json('images')->nullable();
             $table->string('phone')->nullable();
             $table->date("date_of_birth")->nullable();
             $table->enum("gender", ["Male", "Female", "Third Gender"])->nullable();
@@ -36,7 +36,8 @@ return new class extends Migration
             $table->string("zip")->nullable();
             $table->text("address")->nullable();
             $table->enum("status", ["Active", "Inactive", "Banned"])->default("Active");
-            $table->enum("type", ["Admin", "User"])->default("User");
+            $table->unsignedBigInteger("role_id")->default(4); // Default to User role ID
+            $table->foreign("role_id")->references("id")->on("roles")->onDelete("cascade")->onUpdate("cascade");
             $table->rememberToken();
             $table->timestamps();
         });

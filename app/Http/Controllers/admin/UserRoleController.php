@@ -20,11 +20,13 @@ class UserRoleController extends Controller
         // Validate the request data
         $request->validate([
             'name' => 'required|string|max:255|unique:roles,name',
+            'description' => 'nullable|string',
         ]);
 
         Role::create([
             'name' => $request->name,
-            'slug' => Str::slug($request->name)
+            'slug' => Str::slug($request->name),
+            'description' => $request->description
         ]);
 
         return redirect()->route('admin.user-role.index')->with('success', 'User role created successfully.');

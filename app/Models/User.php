@@ -20,13 +20,19 @@ class User extends Authenticatable
     protected $fillable = [
         "name",
         "email",
+        "username",
         "email_verified_at",
         "password",
-        "avatar",
+        "images",
         "phone",
+        "date_of_birth",
+        "gender",
+        "country",
+        "city",
+        "zip",
+        "address",
         "status",
-        "type",
-        "address"
+        "role_id",
     ];
 
     /**
@@ -49,6 +55,13 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'images' => 'json'
         ];
+    }
+
+    // relation with role
+    public function Role()
+    {
+        return $this->hasOne(Role::class, 'id', 'role_id');
     }
 }

@@ -46,10 +46,10 @@
                                 <tr class="align-middle">
                                     <td>{{ $users->perPage() * ($users->currentPage() - 1) + $loop->iteration }}</td>
                                     <td style="width: 50px">
-                                        @if ($item->avatar)
-                                            <img src="{{ asset('storage/uploads/users/' . $item->avatar) }}" alt="">
+                                        @if (isset($item->images['webp']))
+                                            <img src="{{ $item->images['webp'] }}" class="img-thumbnail" alt="">
                                         @else
-                                            <img class="img-fluid" src="{{ asset('assets/img/user2-160x160.jpg') }}" alt="">
+                                            <img class="img-thumbnail" src="{{ asset('assets/img/user-avatar.png') }}" alt="">
                                         @endif
                                     </td>
                                     <td>{{ $item->name }}</td>
@@ -58,8 +58,10 @@
                                     <td>
                                         @if ($item->status === 'Active')
                                             <span class="badge text-bg-success">Active</span>
+                                        @elseif($item->status === 'Inactive')
+                                            <span class="badge text-bg-warning">Inactive</span>
                                         @else
-                                            <span class="badge text-bg-danger">Inactive</span>
+                                            <span class="badge text-bg-danger">Banned</span>
                                         @endif
                                     </td>
                                     <td>{{ $item->type }}</td>

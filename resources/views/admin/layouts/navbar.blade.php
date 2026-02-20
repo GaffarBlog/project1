@@ -32,7 +32,7 @@
                         <!--begin::Message-->
                         <div class="d-flex">
                             <div class="flex-shrink-0">
-                                <img src="./assets/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 rounded-circle me-3" />
+                                <img src="{{ asset('assets/img/user1-128x128.jpg') }}" alt="User Avatar" class="img-size-50 rounded-circle me-3" />
                             </div>
                             <div class="flex-grow-1">
                                 <h3 class="dropdown-item-title">
@@ -52,7 +52,7 @@
                         <!--begin::Message-->
                         <div class="d-flex">
                             <div class="flex-shrink-0">
-                                <img src="./assets/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 rounded-circle me-3" />
+                                <img src="{{ asset('assets/img/user8-128x128.jpg') }}" alt="User Avatar" class="img-size-50 rounded-circle me-3" />
                             </div>
                             <div class="flex-grow-1">
                                 <h3 class="dropdown-item-title">
@@ -74,7 +74,7 @@
                         <!--begin::Message-->
                         <div class="d-flex">
                             <div class="flex-shrink-0">
-                                <img src="./assets/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 rounded-circle me-3" />
+                                <img src="{{ asset('assets/img/user3-128x128.jpg') }}" alt="User Avatar" class="img-size-50 rounded-circle me-3" />
                             </div>
                             <div class="flex-grow-1">
                                 <h3 class="dropdown-item-title">
@@ -135,16 +135,17 @@
             <!--begin::User Menu Dropdown-->
             <li class="nav-item dropdown user-menu">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                    <img src="{{ asset('assets/img/user2-160x160.jpg') }}" class="user-image rounded-circle shadow" alt="User Image" />
+                    <img src="{{ isset(Auth::user()->images['webp']) ? Auth::user()->images['webp'] : asset('assets/img/user-avatar.png') }}" class="user-image rounded-circle shadow" alt="User Image" />
                     <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                     <!--begin::User Image-->
                     <li class="user-header text-bg-primary">
-                        <img src="{{ asset('assets/img/user2-160x160.jpg') }}" class="rounded-circle shadow" alt="User Image" />
+
+                        <img src="{{ isset(Auth::user()->images['webp']) ? Auth::user()->images['webp'] : asset('assets/img/user-avatar.png') }}" class="rounded-circle shadow" alt="User Image" />
                         <p>
-                            Alexander Pierce - Web Developer
-                            <small>Member since Nov. 2023</small>
+                            {{ Auth::user()->name }}
+                            <small>{{ Auth::user()?->Role?->name }}</small>
                         </p>
                     </li>
                     <!--end::User Image-->
