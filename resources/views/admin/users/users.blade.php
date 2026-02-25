@@ -24,7 +24,9 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <div class="card-title">Users: {{ $users->total() }}</div>
-                        <button class="btn btn-primary btn-sm create-btn"><i class="bi bi-plus-lg"></i> Create</button>
+                        <div>
+                            <a href="{{ route('admin.users.create.view') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Create</a>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body p-0 pb-3">
@@ -64,7 +66,7 @@
                                             <span class="badge text-bg-danger">Banned</span>
                                         @endif
                                     </td>
-                                    <td>{{ $item->type }}</td>
+                                    <td>{{ $item->Role?->name }}</td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
                                             <a href="{{ route('admin.users.edit', $item->id) }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
