@@ -11,6 +11,7 @@ class ProfileController extends Controller
     public function profile()
     {
         $user = Auth::user();
+
         return view('admin.auth.profile', compact('user'));
     }
 
@@ -20,7 +21,7 @@ class ProfileController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
             'address' => 'nullable|string',
             'phone' => 'nullable|string|max:20',
         ]);

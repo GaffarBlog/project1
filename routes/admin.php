@@ -7,9 +7,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\UserRoleController;
 use Illuminate\Support\Facades\Route;
 
-
-
-Route::middleware(['web', "AdminMiddleware"])->prefix('admin-area')->group(function () {
+Route::middleware(['web', 'AdminMiddleware'])->prefix('admin-area')->group(function () {
     // Mange login page
     Route::controller(LoginController::class)->group(function () {
         Route::get('/login', 'index')->name('admin.login.index');
