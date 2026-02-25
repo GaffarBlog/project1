@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\LoginController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\UserRoleController;
+use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['web', 'AdminMiddleware'])->prefix('admin-area')->group(function () {
@@ -38,5 +39,8 @@ Route::middleware(['web', 'AdminMiddleware'])->prefix('admin-area')->group(funct
         Route::get('/users-edit/{id}', 'edit')->name('admin.users.edit');
         Route::post('/users-update', 'update')->name('admin.users.update');
         Route::post('/users-delete', 'delete')->name('admin.users.delete');
+    });
+    Route::controller(PermissionController::class)->group(function () {
+        Route::get('/permission/{role_id}', 'index')->name('admin.permissions.index');
     });
 });

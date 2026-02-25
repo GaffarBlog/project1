@@ -1,5 +1,5 @@
-@extends('admin.layouts.main')
-@section('content')
+@extends("admin.layouts.main")
+@section("content")
     <!--------Page Heading & Breadcrumb---------->
     <div class="app-content-header">
         <div class="container-fluid">
@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="float-sm-end">
-                        <a href="{{ route('admin.users.index') }}" class="btn btn-info text-light btn-sm">Users</a>
+                        <a class="btn btn-info text-light btn-sm" href="{{ route("admin.users.index") }}">Users</a>
                     </div>
                 </div>
             </div>
@@ -26,10 +26,10 @@
                     </div>
                 </div>
                 <div class="card-body p-0 pb-3">
-                    <table class="table table-bordered table-hover dataTable dtr-inline" role="table">
+                    <table class="table-bordered table-hover dataTable dtr-inline table" role="table">
                         <thead>
                             <tr>
-                                <th style="width: 15px" scope="col">#</th>
+                                <th scope="col" style="width: 15px">#</th>
                                 <th scope="col">Role</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Action</th>
@@ -41,13 +41,14 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>
-                                        {{ $item->description ?? 'No description' }}
+                                        {{ $item->description ?? "No description" }}
                                     </td>
                                     <td>
-                                        <div class="btn-group btn-group-sm">
+                                        <div class="btn-group btn-group-sm me-2">
                                             <button class="btn btn-primary edit_btn" data-id="{{ $item->id }}"><i class="bi bi-pencil-square"></i></button>
                                             <button class="btn btn-danger delete_btn" data-id="{{ $item->id }}"><i class="bi bi-trash"></i></button>
                                         </div>
+                                        <a class="btn btn-info btn-sm inline-block text-white" href="{{ route("admin.permissions.index", ["role_id" => $item->id]) }}"><i class="bi bi-lock"></i> Permissions</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -59,31 +60,30 @@
         </div>
     </section>
 
-
     <!--------Edit Modal---------->
     <div class="modal" id="editModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit User Role</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
-                <form action="{{ route('admin.user-role.update') }}" method="POST">
+                <form action="{{ route("admin.user-role.update") }}" method="POST">
                     @csrf
-                    <input type="hidden" name="id" id="editId">
+                    <input id="editId" name="id" type="hidden">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="editUserRole" class="form-label">Role</label>
-                            <input type="text" class="form-control" id="editUserRole" name="name">
+                            <label class="form-label" for="editUserRole">Role</label>
+                            <input class="form-control" id="editUserRole" name="name" type="text">
                         </div>
                         <div class="form-group mt-3">
-                            <label for="editUserDescription" class="form-label">Description</label>
-                            <input type="text" class="form-control" id="editUserDescription" name="description">
+                            <label class="form-label" for="editUserDescription">Description</label>
+                            <input class="form-control" id="editUserDescription" name="description" type="text">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-primary" type="submit">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -95,17 +95,17 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Delete User Role</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
-                <form action="{{ route('admin.user-role.delete') }}" method="POST">
+                <form action="{{ route("admin.user-role.delete") }}" method="POST">
                     @csrf
-                    <input type="hidden" name="id" id="deleteId">
+                    <input id="deleteId" name="id" type="hidden">
                     <div class="modal-body">
                         <p>Are you sure you want to delete this user role?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-danger" type="submit">Delete</button>
                     </div>
                 </form>
             </div>
@@ -117,24 +117,24 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Create User Role</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
-                <form action="{{ route('admin.user-role.create') }}" method="POST">
+                <form action="{{ route("admin.user-role.create") }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="userRole" class="form-label">Role</label>
-                            <input type="text" class="form-control" id="userRole" required name="name">
+                            <label class="form-label" for="userRole">Role</label>
+                            <input class="form-control" id="userRole" name="name" required type="text">
                         </div>
                         <div class="form-group mt-3">
-                            <label for="userDescription" class="form-label">Description</label>
-                            <input type="text" class="form-control" id="userDescription" name="description">
+                            <label class="form-label" for="userDescription">Description</label>
+                            <input class="form-control" id="userDescription" name="description" type="text">
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Create</button>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-primary" type="submit">Create</button>
                     </div>
                 </form>
             </div>
@@ -142,7 +142,6 @@
     </div>
 @endsection
 
-
-@push('js')
-    <script src="{{ asset('js/admin/user-role.js') }}"></script>
+@push("js")
+    <script src="{{ asset("js/admin/user-role.js") }}"></script>
 @endpush

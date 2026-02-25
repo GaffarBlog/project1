@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 function sidebarList()
 {
     return [
@@ -8,18 +10,18 @@ function sidebarList()
             'route' => 'admin.dashboard.index',
         ],
         'User Management' => [
-            "icon" => 'bi bi-person-circle',
-            "Users" => [
+            'icon' => 'bi bi-person-circle',
+            'Users' => [
                 'icon' => 'bi bi-circle',
                 'route' => 'admin.users.index',
             ],
-            "User Role" => [
+            'User Role' => [
                 'icon' => 'bi bi-circle',
                 'route' => 'admin.user-role.index',
             ],
-            "User Permission" => [
+            'User Permission' => [
                 'icon' => 'bi bi-circle',
-                'route' => "admin.user-role.create",
+                'route' => 'admin.user-role.create',
             ],
         ],
     ];
@@ -34,12 +36,12 @@ function getAdminRouteMap(): array
         $action = $route->getAction();
 
         // Skip routes without a name or controller
-        if (!$name || !isset($action['controller'])) {
+        if (! $name || ! isset($action['controller'])) {
             continue;
         }
 
         // Only process admin routes (optional filter)
-        if (!str_starts_with($name, 'admin.')) {
+        if (! str_starts_with($name, 'admin.')) {
             continue;
         }
 
@@ -53,7 +55,7 @@ function getAdminRouteMap(): array
 
         $map[$controllerKey][$routeKey] = $name;
     }
-    
+
     return $map;
 }
 function is_multidimensional_array(array $array): bool
@@ -63,6 +65,7 @@ function is_multidimensional_array(array $array): bool
             return true;
         }
     }
+
     return false;
 }
 
@@ -74,10 +77,12 @@ function is_active_sidebar($menuItems)
             return 'menu-open';
         }
     }
+
     return '';
 }
 function is_active_menu($routeName)
 {
     $currentRoute = request()->route()?->getName();
+
     return $currentRoute === $routeName ? 'active' : '';
 }
