@@ -34,7 +34,7 @@ Route::middleware(['web', 'AdminMiddleware'])->prefix('admin-area')->group(funct
     });
     Route::controller(UserController::class)->group(function () {
         Route::get('/users', 'index')->name('admin.users.index');
-        Route::get('/users/create', 'create')->name('admin.users.create.view');
+        Route::get('/users/create', 'create')->name('admin.users.createPage');
         Route::post('/users/create', 'create_user')->name('admin.users.create');
         Route::get('/users-edit/{id}', 'edit')->name('admin.users.edit');
         Route::post('/users-update', 'update')->name('admin.users.update');
@@ -42,5 +42,6 @@ Route::middleware(['web', 'AdminMiddleware'])->prefix('admin-area')->group(funct
     });
     Route::controller(PermissionController::class)->group(function () {
         Route::get('/permission/{role_id}', 'index')->name('admin.permissions.index');
+        Route::post('/permissions', 'update')->name('admin.permissions.update');
     });
 });

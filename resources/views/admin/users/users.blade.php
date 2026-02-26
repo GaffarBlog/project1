@@ -1,5 +1,5 @@
-@extends('admin.layouts.main')
-@section('content')
+@extends("admin.layouts.main")
+@section("content")
     <!--------Page Heading & Breadcrumb---------->
     <div class="app-content-header">
         <div class="container-fluid">
@@ -10,7 +10,7 @@
                 <div class="col-sm-6">
                     <div class="float-sm-end">
                         <div class="float-sm-end">
-                            <a href="{{ route('admin.user-role.index') }}" class="btn btn-info btn-sm text-light">User Role</a>
+                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.user-role.index") }}">User Role</a>
                         </div>
                     </div>
                 </div>
@@ -25,15 +25,18 @@
                     <div class="d-flex justify-content-between">
                         <div class="card-title">Users: {{ $users->total() }}</div>
                         <div>
-                            <a href="{{ route('admin.users.create.view') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Create</a>
+                            @if (has_permission("admin.users.createPage"))
+                                <a class="btn btn-primary btn-sm" href="{{ route("admin.users.createPage") }}"><i class="bi bi-plus-lg"></i> Create</a>
+                            @endif
+
                         </div>
                     </div>
                 </div>
                 <div class="card-body p-0 pb-3">
-                    <table class="table table-bordered table-hover dataTable dtr-inline" role="table">
+                    <table class="table-bordered table-hover dataTable dtr-inline table" role="table">
                         <thead>
                             <tr>
-                                <th style="width: 15px" scope="col">#</th>
+                                <th scope="col" style="width: 15px">#</th>
                                 <th scope="col">Avatar</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
@@ -48,19 +51,19 @@
                                 <tr class="align-middle">
                                     <td>{{ $users->perPage() * ($users->currentPage() - 1) + $loop->iteration }}</td>
                                     <td style="width: 50px">
-                                        @if (isset($item->images['webp']))
-                                            <img src="{{ $item->images['webp'] }}" class="img-thumbnail" alt="">
+                                        @if (isset($item->images["webp"]))
+                                            <img alt="" class="img-thumbnail" src="{{ $item->images["webp"] }}">
                                         @else
-                                            <img class="img-thumbnail" src="{{ asset('assets/img/user-avatar.png') }}" alt="">
+                                            <img alt="" class="img-thumbnail" src="{{ asset("assets/img/user-avatar.png") }}">
                                         @endif
                                     </td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
                                     <td>{{ $item->gender }}</td>
                                     <td>
-                                        @if ($item->status === 'Active')
+                                        @if ($item->status === "Active")
                                             <span class="badge text-bg-success">Active</span>
-                                        @elseif($item->status === 'Inactive')
+                                        @elseif($item->status === "Inactive")
                                             <span class="badge text-bg-warning">Inactive</span>
                                         @else
                                             <span class="badge text-bg-danger">Banned</span>
@@ -69,8 +72,12 @@
                                     <td>{{ $item->Role?->name }}</td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
-                                            <a href="{{ route('admin.users.edit', $item->id) }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
-                                            <button class="btn btn-danger delete_btn" data-id="{{ $item->id }}"><i class="bi bi-trash"></i></button>
+                                            @if (has_permission("admin.users.edit"))
+                                                <a class="btn btn-primary" href="{{ route("admin.users.edit", $item->id) }}"><i class="bi bi-pencil-square"></i></a>
+                                            @endif
+                                            @if (has_permission("admin.users.delete"))
+                                                <button class="btn btn-danger delete_btn" data-id="{{ $item->id }}"><i class="bi bi-trash"></i></button>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -78,7 +85,6 @@
 
                         </tbody>
                     </table>
-
 
                     <div class="mt-3 px-2">
                         {{ $users->links() }}
@@ -94,32 +100,32 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Create User</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
-                <form action="{{ route('admin.users.create') }}" method="POST">
+                <form action="{{ route("admin.users.create") }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="userName" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="userName" required name="name">
+                            <label class="form-label" for="userName">Name</label>
+                            <input class="form-control" id="userName" name="name" required type="text">
                         </div>
                         <div class="form-group mt-3">
-                            <label for="userEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="userEmail" required name="email">
+                            <label class="form-label" for="userEmail">Email</label>
+                            <input class="form-control" id="userEmail" name="email" required type="email">
                         </div>
                         <div class="form-group mt-3">
-                            <label for="userPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="userPassword" required name="password">
+                            <label class="form-label" for="userPassword">Password</label>
+                            <input class="form-control" id="userPassword" name="password" required type="password">
                         </div>
                         <div class="form-group mt-3">
-                            <label for="userConfirmPassword" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" id="userConfirmPassword" required name="password_confirmation">
+                            <label class="form-label" for="userConfirmPassword">Confirm Password</label>
+                            <input class="form-control" id="userConfirmPassword" name="password_confirmation" required type="password">
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-primary" type="submit">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -131,17 +137,17 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Delete User</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
-                <form action="{{ route('admin.users.delete') }}" method="POST">
+                <form action="{{ route("admin.users.delete") }}" method="POST">
                     @csrf
-                    <input type="hidden" name="id" id="deleteId">
+                    <input id="deleteId" name="id" type="hidden">
                     <div class="modal-body">
                         <p>Are you sure you want to delete this user?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-danger" type="submit">Delete</button>
                     </div>
                 </form>
             </div>
@@ -149,7 +155,6 @@
     </div>
 @endsection
 
-
-@push('js')
-    <script src="{{ asset('js/admin/users.js') }}"></script>
+@push("js")
+    <script src="{{ asset("js/admin/users.js") }}"></script>
 @endpush

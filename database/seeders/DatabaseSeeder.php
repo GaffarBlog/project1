@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
+            RouteListSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-            RouteListSeeder::class,
         ]);
     }
 }

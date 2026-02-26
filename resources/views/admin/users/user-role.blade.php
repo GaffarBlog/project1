@@ -22,7 +22,9 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <div class="card-title">User Roles List: {{ $roles->count() }}</div>
-                        <button class="btn btn-primary btn-sm create-btn"><i class="bi bi-plus-lg"></i> Create</button>
+                        @if (has_permission("admin.user-role.create"))
+                            <button class="btn btn-primary btn-sm create-btn"><i class="bi bi-plus-lg"></i> Create</button>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body p-0 pb-3">
@@ -44,11 +46,18 @@
                                         {{ $item->description ?? "No description" }}
                                     </td>
                                     <td>
+
                                         <div class="btn-group btn-group-sm me-2">
-                                            <button class="btn btn-primary edit_btn" data-id="{{ $item->id }}"><i class="bi bi-pencil-square"></i></button>
-                                            <button class="btn btn-danger delete_btn" data-id="{{ $item->id }}"><i class="bi bi-trash"></i></button>
+                                            @if (has_permission("admin.user-role.edit"))
+                                                <button class="btn btn-primary edit_btn" data-id="{{ $item->id }}"><i class="bi bi-pencil-square"></i></button>
+                                            @endif
+                                            @if (has_permission("admin.user-role.delete"))
+                                                <button class="btn btn-danger delete_btn" data-id="{{ $item->id }}"><i class="bi bi-trash"></i></button>
+                                            @endif
                                         </div>
-                                        <a class="btn btn-info btn-sm inline-block text-white" href="{{ route("admin.permissions.index", ["role_id" => $item->id]) }}"><i class="bi bi-lock"></i> Permissions</a>
+                                        @if (has_permission("admin.permissions.index"))
+                                            <a class="btn btn-info btn-sm inline-block text-white" href="{{ route("admin.permissions.index", ["role_id" => $item->id]) }}"><i class="bi bi-lock"></i> Permissions</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

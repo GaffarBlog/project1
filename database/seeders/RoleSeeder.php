@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Role;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\RouteList;
 use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
@@ -13,29 +13,32 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
+        $permissions = RouteList::select('id', 'route')
+            ->get()
+            ->map(function ($item) {
+                return $item->route ?? $item->id;
+            })
+            ->toArray();
         $data = [
+            [
+                'name' => 'Super Admin',
+                'slug' => 'super-admin',
+                'description' => 'Super Admin role with all permissions',
+                'permissions' => implode(',', $permissions),
+            ],
             [
                 'name' => 'Admin',
                 'slug' => 'admin',
-                'description' => 'Admin role with full permissions',
+                'description' => 'Admin role with most permissions',
+                'permissions' => 'admin.dashboard.index',
             ],
             [
                 'name' => 'Editor',
                 'slug' => 'editor',
                 'description' => 'Editor role with limited permissions',
-            ],
-            [
-                'name' => 'Viewer',
-                'slug' => 'viewer',
-                'description' => 'Viewer role with read-only permissions',
-            ],
-            [
-                'name' => 'User',
-                'slug' => 'user',
-                'description' => 'User role with basic permissions',
+                'permissions' => 'admin.dashboard.index',
             ],
         ];
-
 
         foreach ($data as $item) {
             Role::create($item);

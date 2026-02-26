@@ -16,7 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->text("description")->nullable();
+            $table->text('description')->nullable();
+            $table->text('permissions')->nullable();
             $table->timestamps();
         });
 
@@ -29,15 +30,15 @@ return new class extends Migration
             $table->string('password');
             $table->json('images')->nullable();
             $table->string('phone')->nullable();
-            $table->date("date_of_birth")->nullable();
-            $table->enum("gender", ["Male", "Female", "Third Gender"])->nullable();
-            $table->string("country")->nullable();
-            $table->string("city")->nullable();
-            $table->string("zip")->nullable();
-            $table->text("address")->nullable();
-            $table->enum("status", ["Active", "Inactive", "Banned"])->default("Active");
-            $table->unsignedBigInteger("role_id")->default(4); // Default to User role ID
-            $table->foreign("role_id")->references("id")->on("roles")->onDelete("cascade")->onUpdate("cascade");
+            $table->date('date_of_birth')->nullable();
+            $table->enum('gender', ['Male', 'Female', 'Third Gender'])->nullable();
+            $table->string('country')->nullable();
+            $table->string('city')->nullable();
+            $table->string('zip')->nullable();
+            $table->text('address')->nullable();
+            $table->enum('status', ['Active', 'Inactive', 'Banned'])->default('Active');
+            $table->unsignedBigInteger('role_id')->default(4); // Default to User role ID
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

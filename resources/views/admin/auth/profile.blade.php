@@ -1,5 +1,5 @@
-@extends('admin.layouts.main')
-@section('content')
+@extends("admin.layouts.main")
+@section("content")
     <!--begin::App Content Header-->
     <div class="app-content-header">
 
@@ -11,8 +11,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard.index') }}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Profile</li>
+                        <li class="breadcrumb-item"><a href="{{ route("admin.dashboard.index") }}">Home</a></li>
+                        <li aria-current="page" class="breadcrumb-item active">Profile</li>
                     </ol>
                 </div>
             </div>
@@ -20,44 +20,46 @@
     </div>
     <section class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-3">
+            <form action="{{ route("admin.profile.update") }}" enctype="multipart/form-data" method="POST">
+                @csrf
+                <div class="row">
+                    <div class="col-md-3">
 
-                    <!-- Profile Image -->
-                    <div class="card card-primary card-outline">
-                        <div class="card-body box-profile">
-                            <div class="text-center">
-                                <img class="img-fluid rounded-circle img-preview" src="{{ isset($user->images['webp']) ? $user->images['webp'] : asset('assets/img/user-avatar.png') }}" alt="User profile picture">
+                        <!-- Profile Image -->
+                        <div class="card card-primary card-outline">
+                            <div class="card-body box-profile">
+                                <label class="d-block text-center">
+                                    <img alt="User profile picture" class="img-fluid rounded-circle img-preview" id="userAvatarPreview" src="{{ isset($user->images["webp"]) ? $user->images["webp"] : asset("assets/img/user-avatar.png") }}">
+                                    <input class="form-control imageInput" data-target="userAvatarPreview" hidden id="userAvatar" name="avatar" type="file">
+                                </label>
+
+                                <h3 class="mt-2 text-center">{{ $user->name }}</h3>
+
+                                <p class="text-muted text-center">{{ $user->Role->name }}</p>
+
+                                {{-- <ul class="list-group list-group-unbordered mb-3">
+                                    <li class="list-group-item">
+                                        <b>Followers</b> <a class="float-right">1,322</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Following</b> <a class="float-right">543</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Friends</b> <a class="float-right">13,287</a>
+                                    </li>
+                                </ul>
+
+                                <a class="btn btn-primary btn-block" href="#"><b>Follow</b></a> --}}
                             </div>
-
-                            <h3 class="text-center mt-2">{{ $user->name }}</h3>
-
-                            <p class="text-muted text-center">{{$user->Role->name}}</p>
-
-                            <ul class="list-group list-group-unbordered mb-3">
-                                <li class="list-group-item">
-                                    <b>Followers</b> <a class="float-right">1,322</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Following</b> <a class="float-right">543</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Friends</b> <a class="float-right">13,287</a>
-                                </li>
-                            </ul>
-
-                            <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card-body -->
+                        <!-- /.card -->
+
                     </div>
-                    <!-- /.card -->
-
-
-                </div>
-                <!-- /.col -->
-                <div class="col-md-9">
-                    <form action="{{ route('admin.profile.update') }}" method="POST">
-                        @csrf
+                    <!-- /.col -->
+                    <div class="col-md-9">
+                        {{-- <form action="{{ route("admin.profile.update") }}" method="POST">
+                            @csrf --}}
                         <div class="card card-primary card-outline mb-4">
                             <!--begin::Header-->
                             <div class="card-header">
@@ -66,37 +68,125 @@
                             <!--end::Header-->
                             <!--begin::Body-->
                             <div class="card-body">
-                                <div class="row gap-3 gap-sm-0">
+
+                                <div class="row row-gap-3">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="userName">Name</label>
+                                            <input class="form-control" id="userName" name="name" required type="text" value="{{ $user->name }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="userEmail">Email</label>
+                                            <input class="form-control" id="userEmail" name="email" required type="email" value="{{ $user->email }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="userUsername">Username</label>
+                                            <input class="form-control" id="userUsername" name="username" required type="text" value="{{ $user->username }}">
+                                        </div>
+                                    </div>
+                                    {{-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="userRole">Role</label>
+                                            <select class="form-control" id="userRole" name="role_id" required>
+                                                <option disabled selected value="">Select Role</option>
+                                                @foreach ($roles as $role)
+                                                    <option @selected($user->role_id == $role->id) value="{{ $role->id }}">{{ $role->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="userPhone">Phone</label>
+                                            <input class="form-control" id="userPhone" name="phone" type="text" value="{{ $user->phone }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="userDateOfBirth">Date of Birth</label>
+                                            <input class="form-control" id="userDateOfBirth" name="date_of_birth" type="date" value="{{ $user->date_of_birth }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="userGender">Gender</label>
+                                            <select class="form-control" id="userGender" name="gender" required>
+                                                <option disabled selected value="">Select Gender</option>
+                                                <option @selected($user->gender === "Male") value="Male">Male</option>
+                                                <option @selected($user->gender === "Female") value="Female">Female</option>
+                                                <option @selected($user->gender === "Third Gender") value="Third Gender">Third Gender</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="userCountry">Country</label>
+                                            <input class="form-control" id="userCountry" name="country" type="text" value="{{ $user->country }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="userCity">City</label>
+                                            <input class="form-control" id="userCity" name="city" type="text" value="{{ $user->city }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="userZipCode">Zip Code</label>
+                                            <input class="form-control" id="userZipCode" name="zip" type="text" value="{{ $user->zip }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="userAddress">Address</label>
+                                            <textarea class="form-control" id="userAddress" name="address" rows="5">{{ $user->address }}</textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="mt-4">
+                                    <button class="btn btn-primary">Update</button>
+                                </div>
+                            </div>
+                            <!--end::Body-->
+
+                        </div>
+
+                        <div class="card card-outline card-primary collapsed-card">
+                            <div class="card-header">
+                                <h3 class="card-title">Change Password</h3>
+                                <div class="card-tools">
+                                    <button class="btn btn-tool" data-lte-toggle="card-collapse" type="button">
+                                        <i class="bi bi-plus-lg" data-lte-icon="expand"></i>
+                                        <i class="bi bi-dash-lg" data-lte-icon="collapse"></i>
+                                    </button>
+                                </div>
+                                <!-- /.card-tools -->
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="name">Old Password</label>
+                                    <input class="form-control" id="old_password" name="old_password" type="password">
+                                </div>
+                                <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="name" class="form-label">Name</label>
-                                            <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
-                                            @error('name')
-                                                <div class="invalid-feedback" role="alert">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group mt-3">
-                                            <label for="phone" class="form-label">Phone</label>
-                                            <input type="text" class="form-control" id="phone" name="phone" value="{{ $user->phone }}">
-                                            @error('phone')
-                                                <div class="invalid-feedback" role="alert">{{ $message }}</div>
-                                            @enderror
+                                            <label class="form-label" for="email">New Password</label>
+                                            <input class="form-control" id="password" name="password" type="password">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="email" class="form-label">Email</label>
-                                            <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}">
-                                            @error('email')
-                                                <div class="invalid-feedback" role="alert">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group mt-3">
-                                            <label for="address" class="form-label">Address</label>
-                                            <input type="text" class="form-control" id="address" name="address" value="{{ $user->address }}">
-                                            @error('address')
-                                                <div class="invalid-feedback" role="alert">{{ $message }}</div>
-                                            @enderror
+                                            <label class="form-label" for="email">Confirm Password</label>
+                                            <input class="form-control" id="confirm_password" name="confirm_password" type="password">
                                         </div>
                                     </div>
                                 </div>
@@ -105,53 +195,13 @@
                                     <button class="btn btn-primary">Update</button>
                                 </div>
                             </div>
-                            <!--end::Body-->
-                    </form>
-                </div>
-
-
-                <div class="card card-outline card-primary collapsed-card">
-                    <div class="card-header">
-                        <h3 class="card-title">Change Password</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse">
-                                <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
-                                <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
-                            </button>
-                        </div>
-                        <!-- /.card-tools -->
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="form-group mb-3">
-                            <label for="name" class="form-label">Old Password</label>
-                            <input type="password" class="form-control" id="old_password" name="old_password">
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="email" class="form-label">New Password</label>
-                                    <input type="password" class="form-control" id="password" name="password">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="email" class="form-label">Confirm Password</label>
-                                    <input type="password" class="form-control" id="confirm_password" name="confirm_password">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-4">
-                            <button class="btn btn-primary">Update</button>
+                            <!-- /.card-body -->
                         </div>
                     </div>
-                    <!-- /.card-body -->
+                    <!-- /.col -->
                 </div>
-            </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
+                <!-- /.row -->
+            </form>
         </div><!-- /.container-fluid -->
     </section>
     <!--end::App Content-->

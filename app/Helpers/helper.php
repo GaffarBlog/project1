@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 function sidebarList()
@@ -8,20 +9,20 @@ function sidebarList()
         'Dashboard' => [
             'icon' => 'bi bi-speedometer',
             'route' => 'admin.dashboard.index',
+            'permission' => has_permission('admin.dashboard.index'),
         ],
         'User Management' => [
             'icon' => 'bi bi-person-circle',
+            'permission' => has_permissions(['admin.users.index', 'admin.user-role.index']),
             'Users' => [
                 'icon' => 'bi bi-circle',
                 'route' => 'admin.users.index',
+                'permission' => has_permission('admin.users.index'),
             ],
             'User Role' => [
                 'icon' => 'bi bi-circle',
                 'route' => 'admin.user-role.index',
-            ],
-            'User Permission' => [
-                'icon' => 'bi bi-circle',
-                'route' => 'admin.user-role.create',
+                'permission' => has_permission('admin.user-role.index'),
             ],
         ],
     ];
@@ -36,7 +37,7 @@ function getAdminRouteMap(): array
         $action = $route->getAction();
 
         // Skip routes without a name or controller
-        if (! $name || ! isset($action['controller'])) {
+        if (! $name || ! isset($action['controller']) || str_contains($action['controller'], 'LoginController')) {
             continue;
         }
 
@@ -50,7 +51,7 @@ function getAdminRouteMap(): array
         $controllerShortName = class_basename($controllerClass);                  // "UserController"
         $controllerKey = str_replace('Controller', '', $controllerShortName);     // "User"
 
-        // Extract last segment of route name: "admin.users.create.view" → "view"
+        // Extract last segment of route name: "admin.users.createPage" → "view"
         $routeKey = last(explode('.', $name));                                    // "view"
 
         $map[$controllerKey][$routeKey] = $name;
@@ -85,4 +86,22 @@ function is_active_menu($routeName)
     $currentRoute = request()->route()?->getName();
 
     return $currentRoute === $routeName ? 'active' : '';
+}
+
+// Is permission exist in role permissions
+function has_permission($permission)
+{
+    $permissions = explode(',', Auth::user()->Role?->permissions ?? '');
+
+    return in_array($permission, $permissions);
+}
+function has_permissions(array $permissions): bool
+{
+    foreach ($permissions as $permission) {
+        if (has_permission($permission)) {
+            return true;
+        }
+    }
+
+    return false;
 }

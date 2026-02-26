@@ -17,14 +17,19 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $route_name = $request->route()?->getName();
-        if (Auth::check() && Auth::user()->role_id === 1) {
+        if (Auth::check()) {
             if ($route_name === 'admin.login.index') {
                 return redirect()->route('admin.dashboard.index');
             } else {
-                return $next($request);
+                if (has_permission($route_name)) {
+                    return $next($request);
+                } else {
+                    return redirect()->route('admin.dashboard.index')->with('warning', 'You do not have permission to access this route.');
+                }
+
             }
         } else {
-            if ($route_name === "admin.login.index" || $route_name === "admin.login.post") {
+            if ($route_name === 'admin.login.index' || $route_name === 'admin.login.post') {
                 return $next($request);
             } else {
                 return redirect()->route('admin.login.index');

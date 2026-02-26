@@ -16,22 +16,22 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => "Abdul Gaffar",
-            'email' => "admin@gmail.com",
-            'username' => "admin@gmail.com",
-            'phone' => "0123456789",
+            'name' => 'Abdul Gaffar',
+            'email' => 'admin@gmail.com',
+            'username' => 'admin@gmail.com',
+            'phone' => '0123456789',
             'date_of_birth' => fake()->date(),
-            'gender' => "Male",
-            'country' => "Bangladesh",
-            'city' => "Bogura",
-            'zip' => "5830",
-            'address' => "Bogura, Bangladesh",
-            'status' => "Active",
+            'gender' => 'Male',
+            'country' => 'Bangladesh',
+            'city' => 'Bogura',
+            'zip' => '5830',
+            'address' => 'Bogura, Bangladesh',
+            'status' => 'Active',
             'role_id' => 1,
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('123456'),
             'remember_token' => Str::random(10),
         ]);
-        User::factory()->count(50)->create();
+        User::factory()->count(10)->create();
     }
 }

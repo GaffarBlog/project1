@@ -2,9 +2,9 @@
      <!--begin::Sidebar Brand-->
      <div class="sidebar-brand">
          <!--begin::Brand Link-->
-         <a href="{{ route('admin.dashboard.index') }}" class="brand-link">
+         <a class="brand-link" href="{{ route("admin.dashboard.index") }}">
              <!--begin::Brand Image-->
-             <img src="{{ asset('assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image opacity-75 shadow" />
+             <img alt="AdminLTE Logo" class="brand-image opacity-75 shadow" src="{{ asset("assets/img/AdminLTELogo.png") }}" />
              <!--end::Brand Image-->
              <!--begin::Brand Text-->
              <span class="brand-text fw-light">AdminLTE 4</span>
@@ -17,12 +17,12 @@
      <div class="sidebar-wrapper">
          <nav class="mt-2">
              <!--begin::Sidebar Menu-->
-             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation" aria-label="Main navigation" data-accordion="false" id="navigation">
+             <ul aria-label="Main navigation" class="nav sidebar-menu flex-column" data-accordion="false" data-lte-toggle="treeview" id="navigation" role="navigation">
                  @foreach (sidebarList() as $key => $item)
-                     @if (is_multidimensional_array($item))
+                     @if (is_multidimensional_array($item) && isset($item["permission"]) && $item["permission"])
                          <li class="nav-item {{ is_active_sidebar($item) }}">
-                             <a href="#" class="nav-link">
-                                 <i class="nav-icon {{ $item['icon'] }}"></i>
+                             <a class="nav-link" href="#">
+                                 <i class="nav-icon {{ $item["icon"] }}"></i>
                                  <p>{{ $key }}</p>
                                  <i class="nav-arrow bi bi-chevron-right"></i>
                              </a>
@@ -31,9 +31,12 @@
                                      @if (!is_array($subItem))
                                          @continue
                                      @endif
+                                     @if (isset($subItem["permission"]) && !$subItem["permission"])
+                                         @continue
+                                     @endif
                                      <li class="nav-item">
-                                         <a href="{{ route($subItem['route']) }}" class="nav-link {{ is_active_menu($subItem['route']) }}">
-                                             <i class="nav-icon {{ $subItem['icon'] }}"></i>
+                                         <a class="nav-link {{ is_active_menu($subItem["route"]) }}" href="{{ isset($subItem["route"]) ? route($subItem["route"]) : "#" }}">
+                                             <i class="nav-icon {{ $subItem["icon"] }}"></i>
                                              <p>{{ $subKey }}</p>
                                          </a>
                                      </li>
@@ -42,16 +45,16 @@
                              </ul>
                          </li>
                      @else
-                         <li class="nav-item">
-                             <a href="{{ route($item['route']) }}" class="nav-link {{ is_active_menu($item['route']) }}">
-                                 <i class="nav-icon {{ $item['icon'] }}"></i>
-                                 <p>{{ $key }}</p>
-                             </a>
-                         </li>
+                         @if (isset($item["permission"]) && $item["permission"])
+                             <li class="nav-item">
+                                 <a class="nav-link {{ is_active_menu($item["route"]) }}" href="{{ isset($item["route"]) ? route($item["route"]) : "#" }}">
+                                     <i class="nav-icon {{ $item["icon"] }}"></i>
+                                     <p>{{ $key }}</p>
+                                 </a>
+                             </li>
+                         @endif
                      @endif
                  @endforeach
-
-
 
              </ul>
              <!--end::Sidebar Menu-->

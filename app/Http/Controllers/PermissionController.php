@@ -4,16 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\RouteList;
+use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
     public function index($role_id)
     {
         $role = Role::findOrFail($role_id);
+        $permissions = explode(',', $role->permissions);
         $routes = RouteList::select('id', 'name', 'route')->whereNull('parent_id')->with('Childrens')->get();
 
-        // return $routes;
+        return view('admin.permissions.index', compact('role', 'routes', 'permissions'));
+    }
 
-        return view('admin.permissions.index', compact('role', 'routes'));
+    // update permissions for a role
+    public function update(Request $request)
+    {
+        $request->validate([
+            'role_id' => 'required|exists:roles,id',
+            'permissions' => 'array',
+        ]);
+        $role = Role::findOrFail($request->role_id);
+        $role->update([
+            'permissions' => implode(',', $request->permissions ?? []),
+        ]);
+
+        return redirect()->route('admin.permissions.index', $role->id)->with('success', 'Permissions updated successfully.');
     }
 }

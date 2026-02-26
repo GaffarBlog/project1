@@ -25,25 +25,58 @@
                     </div>
                 </div>
                 <div class="card-body p-3 pb-3">
-                    @foreach ($routes as $item)
-                        <div class="card mb-3 p-1">
-                            <div class="card-header">
-                                <h3 class="card-title">{{ $item->name }}</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    @foreach ($item->Childrens as $child)
-                                        <div class="col-2">
-                                            <div class="form-check mb-2">
-                                                <input class="form-check-input" id="permission_{{ $child->id }}" name="permissions[]" type="checkbox" value="{{ $child->id }}">
-                                                <label class="form-check-label" for="permission_{{ $child->id }}">{{ ucwords($child->name) }}</label>
-                                            </div>
+                    @php
+                        $maxChildren = $routes->max(fn($item) => $item->Childrens->count());
+                    @endphp
+                    <form action="{{ route("admin.permissions.update") }}" method="POST">
+                        @csrf
+                        <input name="role_id" type="hidden" value="{{ $role->id }}">
+                        <table class="table-bordered table-hover dataTable dtr-inline table" role="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th colspan="{{ $maxChildren - 1 }}">Permission</th>
+                                    <th>
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="permission_all" type="checkbox">
+                                            <label class="form-check-label" for="permission_all">
+                                                Permission All
+                                            </label>
                                         </div>
-                                    @endforeach
-                                </div>
-                            </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($routes as $item)
+                                    @php $childCount = $item->Childrens->count(); @endphp
+                                    <tr>
+                                        <th>
+                                            {{ ucwords($item->name) }}
+                                        </th>
+
+                                        @foreach ($item->Childrens as $child)
+                                            <td>
+                                                <div class="form-check">
+                                                    <input @checked(in_array($child->route, $permissions)) class="form-check-input permissions" id="permission_{{ $child->id }}" name="permissions[]" type="checkbox" value="{{ $child->route }}">
+                                                    <label class="form-check-label" for="permission_{{ $child->id }}">
+                                                        {{ ucwords($child->name) }}
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        @endforeach
+
+                                        @if ($maxChildren > $childCount)
+                                            <td colspan="{{ $maxChildren - $childCount }}"></td>
+                                        @endif
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <div class="text-end">
+                            <button class="btn btn-primary" type="submit">Update</button>
                         </div>
-                    @endforeach
+                    </form>
                 </div>
             </div>
         </div>

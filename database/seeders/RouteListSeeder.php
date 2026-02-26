@@ -21,7 +21,7 @@ class RouteListSeeder extends Seeder
             $action = $route->getAction();
 
             // Skip routes without a name or controller
-            if (! $name || ! isset($action['controller'])) {
+            if (! $name || ! isset($action['controller']) || str_contains($action['controller'], 'LoginController')) {
                 continue;
             }
 
@@ -35,7 +35,7 @@ class RouteListSeeder extends Seeder
             $controllerShortName = class_basename($controllerClass);                  // "UserController"
             $controllerKey = str_replace('Controller', '', $controllerShortName);     // "User"
 
-            // Extract last segment of route name: "admin.users.create.view" → "view"
+            // Extract last segment of route name: "admin.users.createPage" → "view"
             $routeKey = last(explode('.', $name));                                    // "view"
 
             $map[$controllerKey][$routeKey] = $name;
