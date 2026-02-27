@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+use Spatie\Image\Image;
 
 function sidebarList()
 {
@@ -23,6 +26,20 @@ function sidebarList()
                 'icon' => 'bi bi-circle',
                 'route' => 'admin.user-role.index',
                 'permission' => has_permission('admin.user-role.index'),
+            ],
+        ],
+        'Product Management' => [
+            'icon' => 'bi bi-person-circle',
+            'permission' => has_permissions(['admin.products.index', 'admin.product-category.index']),
+            'Products' => [
+                'icon' => 'bi bi-circle',
+                'route' => 'admin.products.index',
+                'permission' => has_permission('admin.products.index'),
+            ],
+            'Product Category' => [
+                'icon' => 'bi bi-circle',
+                'route' => 'admin.categories.index',
+                'permission' => has_permission('admin.categories.index'),
             ],
         ],
     ];
@@ -104,4 +121,46 @@ function has_permissions(array $permissions): bool
     }
 
     return false;
+}
+
+// upload image and return path
+if (! function_exists('upload_file')) {
+
+    function upload_file($file, $folder = 'images', $quality = 80)
+    {
+        // Base upload path
+        $basePath = public_path("storage/uploads/{$folder}");
+        $webpPath = "{$basePath}/webp";
+
+        // Ensure directories exist
+        if (! File::exists($basePath)) {
+            File::makeDirectory($basePath, 0755, true);
+        }
+
+        if (! File::exists($webpPath)) {
+            File::makeDirectory($webpPath, 0755, true);
+        }
+
+        // Generate unique file name
+        $extension = $file->getClientOriginalExtension();
+        $fileName = Str::uuid().'.'.$extension;
+        $webpFileName = Str::uuid().'.webp';
+
+        // Move original file
+        $file->move($basePath, $fileName);
+
+        // Create WebP version
+        Image::load("{$basePath}/{$fileName}")
+            ->format('webp')
+            ->quality($quality)
+            ->save("{$webpPath}/{$webpFileName}");
+
+        $originalPath = "storage/uploads/{$folder}/{$fileName}";
+        $webpPath = "storage/uploads/{$folder}/webp/{$webpFileName}";
+
+        return [
+            'original' => asset($originalPath),
+            'webp' => asset($webpPath),
+        ];
+    }
 }

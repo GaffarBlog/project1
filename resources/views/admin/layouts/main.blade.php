@@ -37,7 +37,7 @@
             <!--begin::App Main-->
             <main class="app-main">
                 @if ($errors->any())
-                    <div class="toast-container position-fixed end-0 top-0 p-3">
+                    <div class="toast-container alert-box position-fixed end-0 top-0 p-3">
                         <div aria-atomic="true" aria-live="assertive" class="toast toast-danger fade show" id="toastPrimary" role="alert">
                             <div class="toast-header">
                                 <i class="bi bi-circle me-2"></i>
@@ -55,7 +55,7 @@
                     </div>
                 @endif
                 @session("success")
-                    <div class="toast-container position-fixed end-0 top-0 p-3">
+                    <div class="toast-container alert-box position-fixed end-0 top-0 p-3">
                         <div aria-atomic="true" aria-live="assertive" class="toast toast-success fade show" id="toastPrimary" role="alert">
                             <div class="toast-header">
                                 <i class="bi bi-circle me-2"></i>
@@ -67,7 +67,7 @@
                     </div>
                 @endsession
                 @session("error")
-                    <div class="toast-container position-fixed end-0 top-0 p-3">
+                    <div class="toast-container alert-box position-fixed end-0 top-0 p-3">
                         <div aria-atomic="true" aria-live="assertive" class="toast toast-danger fade show" id="toastPrimary" role="alert">
                             <div class="toast-header">
                                 <i class="bi bi-circle me-2"></i>
@@ -79,7 +79,7 @@
                     </div>
                 @endsession
                 @session("warning")
-                    <div class="toast-container position-fixed end-0 top-0 p-3">
+                    <div class="toast-container alert-box position-fixed end-0 top-0 p-3">
                         <div aria-atomic="true" aria-live="assertive" class="toast toast-warning fade show" id="toastPrimary" role="alert">
                             <div class="toast-header">
                                 <i class="bi bi-circle me-2"></i>

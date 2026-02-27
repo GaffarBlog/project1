@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\LoginController;
+use App\Http\Controllers\admin\PermissionController;
+use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\UserRoleController;
-use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['web', 'AdminMiddleware'])->prefix('admin-area')->group(function () {
@@ -43,5 +45,21 @@ Route::middleware(['web', 'AdminMiddleware'])->prefix('admin-area')->group(funct
     Route::controller(PermissionController::class)->group(function () {
         Route::get('/permission/{role_id}', 'index')->name('admin.permissions.index');
         Route::post('/permissions', 'update')->name('admin.permissions.update');
+    });
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('/products', 'index')->name('admin.products.index');
+        Route::get('/products/create', 'create')->name('admin.products.createPage');
+        Route::post('/products/create', 'create')->name('admin.products.create');
+        Route::get('/products-edit/{id}', 'edit')->name('admin.products.edit');
+        Route::post('/products-update', 'update')->name('admin.products.update');
+        Route::post('/products-delete', 'delete')->name('admin.products.delete');
+    });
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('/categories', 'index')->name('admin.categories.index');
+        Route::get('/categories/create', 'create')->name('admin.categories.createPage');
+        Route::post('/categories/create', 'create')->name('admin.categories.create');
+        Route::get('/categories-edit/{id}', 'edit')->name('admin.categories.edit');
+        Route::post('/categories-update', 'update')->name('admin.categories.update');
+        Route::post('/categories-delete', 'delete')->name('admin.categories.delete');
     });
 });
