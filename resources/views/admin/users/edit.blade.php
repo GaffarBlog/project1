@@ -9,11 +9,11 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="text-end">
-                        @if (has_permission("admin.users.index"))
-                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.users.index") }}">Users List</a>
+                        @if (has_permission("admin.users.view"))
+                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.users.view") }}">Users List</a>
                         @endif
-                        @if (has_permission("admin.user-role.index"))
-                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.user-role.index") }}">User Role</a>
+                        @if (has_permission("admin.user-role.view"))
+                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.user-role.view") }}">User Role</a>
                         @endif
                     </div>
                 </div>

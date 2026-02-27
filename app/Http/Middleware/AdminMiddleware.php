@@ -19,12 +19,12 @@ class AdminMiddleware
         $route_name = $request->route()?->getName();
         if (Auth::check()) {
             if ($route_name === 'admin.login.index') {
-                return redirect()->route('admin.dashboard.index');
+                return redirect()->route('admin.dashboard.view');
             } else {
                 if (has_permission($route_name)) {
                     return $next($request);
                 } else {
-                    return redirect()->route('admin.dashboard.index')->with('warning', 'You do not have permission to access this route.');
+                    return redirect()->route('admin.dashboard.view')->with('warning', 'You do not have permission to access this route.');
                 }
 
             }

@@ -9,8 +9,8 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="text-end">
-                        <a class="btn btn-info btn-sm text-light" href="{{ route("admin.users.index") }}">Users List</a>
-                        <a class="btn btn-info btn-sm text-light" href="{{ route("admin.user-role.index") }}">User Role</a>
+                        <a class="btn btn-info btn-sm text-light" href="{{ route("admin.users.view") }}">Users List</a>
+                        <a class="btn btn-info btn-sm text-light" href="{{ route("admin.user-role.view") }}">User Role</a>
                     </div>
                 </div>
             </div>

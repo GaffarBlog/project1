@@ -8,9 +8,9 @@
                     <h3 class="mb-0">Categories Management</h3>
                 </div>
                 <div class="col-sm-6">
-                    @if (has_permission("admin.products.index"))
+                    @if (has_permission("admin.products.view"))
                         <div class="text-end">
-                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.products.index") }}">Products</a>
+                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.products.view") }}">Products</a>
                         </div>
                     @endif
                 </div>
@@ -24,7 +24,7 @@
                 <div class="card card-primary card-outline mb-4">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
-                            <div class="card-title">Create User</div>
+                            <div class="card-title">Create Category</div>
                         </div>
                     </div>
                     <div class="card-body p-3 pb-3">
@@ -70,7 +70,7 @@
                             @endif
                         </div>
                         <div>
-                            <a class="btn btn-primary" href="{{ route("admin.categories.index") }}">Back</a>
+                            <a class="btn btn-primary" href="{{ route("admin.categories.view") }}">Back</a>
                         </div>
                     </div>
                 </div>
@@ -93,7 +93,10 @@
                                         @if ($item->parent_id)
                                             {{ $item->name }}
                                         @else
-                                            <a href="{{ route("admin.categories.index", ["parent_id" => $item->id]) }}">{{ $item->name }}</a>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <a href="{{ route("admin.categories.view", ["parent_id" => $item->id]) }}">{{ $item->name }}</a>
+                                                <span class="badge text-bg-info text-white">{{ $item->subcategories_count ?? 0 }}</span>
+                                            </div>
                                         @endif
                                     </td>
 

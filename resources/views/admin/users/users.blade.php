@@ -8,10 +8,10 @@
                     <h3 class="mb-0">Users Management</h3>
                 </div>
                 <div class="col-sm-6">
-                    @if (has_permission("admin.user-role.index"))
+                    @if (has_permission("admin.user-role.view"))
                         <div class="text-end">
-                            @if (has_permission("admin.user-role.index"))
-                                <a class="btn btn-info btn-sm text-light" href="{{ route("admin.user-role.index") }}">User Role</a>
+                            @if (has_permission("admin.user-role.view"))
+                                <a class="btn btn-info btn-sm text-light" href="{{ route("admin.user-role.view") }}">User Role</a>
                             @endif
                         </div>
                     @endif

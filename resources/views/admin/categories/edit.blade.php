@@ -9,11 +9,11 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="text-end">
-                        @if (has_permission("admin.categories.index"))
-                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.categories.index") }}">Categories List</a>
+                        @if (has_permission("admin.categories.view"))
+                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.categories.view") }}">Categories List</a>
                         @endif
-                        @if (has_permission("admin.products.index"))
-                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.products.index") }}">Products</a>
+                        @if (has_permission("admin.products.view"))
+                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.products.view") }}">Products</a>
                         @endif
                     </div>
                 </div>

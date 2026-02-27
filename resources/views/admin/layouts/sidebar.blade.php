@@ -2,7 +2,7 @@
      <!--begin::Sidebar Brand-->
      <div class="sidebar-brand">
          <!--begin::Brand Link-->
-         <a class="brand-link" href="{{ route("admin.dashboard.index") }}">
+         <a class="brand-link" href="{{ route("admin.dashboard.view") }}">
              <!--begin::Brand Image-->
              <img alt="AdminLTE Logo" class="brand-image opacity-75 shadow" src="{{ asset("assets/img/AdminLTELogo.png") }}" />
              <!--end::Brand Image-->

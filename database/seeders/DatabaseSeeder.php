@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             RouteListSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
+            CategorySeeder::class,
         ]);
     }
 }

@@ -14,7 +14,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('id', 'Desc')->paginate(20);
+        $users = User::orderBy('id', 'Desc')->where('role_id', '!=', 1)->paginate(20);
         $roles = Role::select('id', 'name')->get();
 
         return view('admin.users.users', compact('users', 'roles'));
@@ -66,7 +66,7 @@ class UserController extends Controller
         }
         User::updateOrCreate($userdata);
 
-        return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
+        return redirect()->route('admin.users.view')->with('success', 'User created successfully.');
     }
 
     public function edit($id)
@@ -129,7 +129,7 @@ class UserController extends Controller
             'images' => $images,
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
+        return redirect()->route('admin.users.view')->with('success', 'User updated successfully.');
     }
 
     // Delete user role
@@ -138,7 +138,7 @@ class UserController extends Controller
         $request->validate([
             'id' => 'required|exists:users,id',
         ]);
-        User::findOrFail($request->id)->delete();
+        User::findOrFail($request->id)->where('role_id', '!=', 1)->delete();
 
         return redirect()->back()->with('success', 'User deleted successfully.');
     }

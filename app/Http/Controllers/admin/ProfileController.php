@@ -49,6 +49,6 @@ class ProfileController extends Controller
             'images' => $images,
         ]);
 
-        return redirect()->route('admin.profile.index')->with('success', 'Profile updated successfully.');
+        return redirect()->route('admin.profile.view')->with('success', 'Profile updated successfully.');
     }
 }

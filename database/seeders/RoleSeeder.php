@@ -30,13 +30,13 @@ class RoleSeeder extends Seeder
                 'name' => 'Admin',
                 'slug' => 'admin',
                 'description' => 'Admin role with most permissions',
-                'permissions' => 'admin.dashboard.index',
+                'permissions' => 'admin.dashboard.view',
             ],
             [
                 'name' => 'Editor',
                 'slug' => 'editor',
                 'description' => 'Editor role with limited permissions',
-                'permissions' => 'admin.dashboard.index',
+                'permissions' => 'admin.dashboard.view',
             ],
         ];
 

@@ -11,35 +11,35 @@ function sidebarList()
     return [
         'Dashboard' => [
             'icon' => 'bi bi-speedometer',
-            'route' => 'admin.dashboard.index',
-            'permission' => has_permission('admin.dashboard.index'),
+            'route' => 'admin.dashboard.view',
+            'permission' => has_permission('admin.dashboard.view'),
         ],
         'User Management' => [
             'icon' => 'bi bi-person-circle',
-            'permission' => has_permissions(['admin.users.index', 'admin.user-role.index']),
+            'permission' => has_permissions(['admin.users.view', 'admin.user-role.view']),
             'Users' => [
                 'icon' => 'bi bi-circle',
-                'route' => 'admin.users.index',
-                'permission' => has_permission('admin.users.index'),
+                'route' => 'admin.users.view',
+                'permission' => has_permission('admin.users.view'),
             ],
             'User Role' => [
                 'icon' => 'bi bi-circle',
-                'route' => 'admin.user-role.index',
-                'permission' => has_permission('admin.user-role.index'),
+                'route' => 'admin.user-role.view',
+                'permission' => has_permission('admin.user-role.view'),
             ],
         ],
         'Product Management' => [
             'icon' => 'bi bi-person-circle',
-            'permission' => has_permissions(['admin.products.index', 'admin.categories.index']),
+            'permission' => has_permissions(['admin.products.view', 'admin.categories.view']),
             'Products' => [
                 'icon' => 'bi bi-circle',
-                'route' => 'admin.products.index',
-                'permission' => has_permission('admin.products.index'),
+                'route' => 'admin.products.view',
+                'permission' => has_permission('admin.products.view'),
             ],
             'Product Category' => [
                 'icon' => 'bi bi-circle',
-                'route' => 'admin.categories.index',
-                'permission' => has_permission('admin.categories.index'),
+                'route' => 'admin.categories.view',
+                'permission' => has_permission('admin.categories.view'),
             ],
         ],
     ];

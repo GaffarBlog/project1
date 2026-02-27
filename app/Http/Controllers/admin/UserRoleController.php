@@ -29,7 +29,7 @@ class UserRoleController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('admin.user-role.index')->with('success', 'User role created successfully.');
+        return redirect()->route('admin.user-role.view')->with('success', 'User role created successfully.');
     }
 
     public function edit($id)
@@ -54,7 +54,7 @@ class UserRoleController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('admin.user-role.index')->with('success', 'User role updated successfully.');
+        return redirect()->route('admin.user-role.view')->with('success', 'User role updated successfully.');
     }
 
     // Delete user role
@@ -65,6 +65,6 @@ class UserRoleController extends Controller
         ]);
         Role::findOrFail($request->id)->delete();
 
-        return redirect()->route('admin.user-role.index')->with('success', 'User role deleted successfully.');
+        return redirect()->route('admin.user-role.view')->with('success', 'User role deleted successfully.');
     }
 }

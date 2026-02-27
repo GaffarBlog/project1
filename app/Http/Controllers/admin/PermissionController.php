@@ -30,6 +30,6 @@ class PermissionController extends Controller
             'permissions' => implode(',', $request->permissions ?? []),
         ]);
 
-        return redirect()->route('admin.permissions.index', $role->id)->with('success', 'Permissions updated successfully.');
+        return redirect()->route('admin.permissions.view', $role->id)->with('success', 'Permissions updated successfully.');
     }
 }

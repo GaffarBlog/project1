@@ -9,8 +9,8 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="text-end">
-                        @if (has_permission("admin.users.index"))
-                            <a class="btn btn-info text-light btn-sm" href="{{ route("admin.users.index") }}">Users</a>
+                        @if (has_permission("admin.users.view"))
+                            <a class="btn btn-info text-light btn-sm" href="{{ route("admin.users.view") }}">Users</a>
                         @endif
                     </div>
                 </div>
@@ -57,8 +57,8 @@
                                                 <button class="btn btn-danger delete_btn" data-id="{{ $item->id }}"><i class="bi bi-trash"></i></button>
                                             @endif
                                         </div>
-                                        @if (has_permission("admin.permissions.index"))
-                                            <a class="btn btn-info btn-sm inline-block text-white" href="{{ route("admin.permissions.index", ["role_id" => $item->id]) }}"><i class="bi bi-lock"></i> Permissions</a>
+                                        @if (has_permission("admin.permissions.view"))
+                                            <a class="btn btn-info btn-sm inline-block text-white" href="{{ route("admin.permissions.view", ["role_id" => $item->id]) }}"><i class="bi bi-lock"></i> Permissions</a>
                                         @endif
                                     </td>
                                 </tr>
