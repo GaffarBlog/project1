@@ -16,12 +16,6 @@ $(document).ready(function () {
         });
     });
 
-    $(".delete_btn").on("click", function () {
-        const id = $(this).data("id");
-        $("#deleteId").val(id);
-        $("#deleteModal").modal("show");
-    });
-
     $(".create-btn").on("click", function () {
         $("#createModal").modal("show");
     });

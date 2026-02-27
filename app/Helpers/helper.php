@@ -30,7 +30,7 @@ function sidebarList()
         ],
         'Product Management' => [
             'icon' => 'bi bi-person-circle',
-            'permission' => has_permissions(['admin.products.index', 'admin.product-category.index']),
+            'permission' => has_permissions(['admin.products.index', 'admin.categories.index']),
             'Products' => [
                 'icon' => 'bi bi-circle',
                 'route' => 'admin.products.index',

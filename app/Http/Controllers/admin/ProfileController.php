@@ -5,8 +5,6 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use Spatie\Image\Image;
 
 class ProfileController extends Controller
 {
@@ -35,18 +33,7 @@ class ProfileController extends Controller
         ]);
         $images = $user->images;
         if ($request->file('avatar')) {
-            $avatar = $request->file('avatar');
-            $avatarName = time().'.'.$avatar->getClientOriginalExtension();
-            $avatar->move('storage/uploads/users', $avatarName);
-            $path = 'storage/uploads/users/'.$avatarName;
-            $images['original'] = asset($path);
-            $webp_path = public_path('storage/uploads/users/webp/'.Str::replaceLast('.'.$avatar->getClientOriginalExtension(), '.webp', $avatarName));
-            Image::load(public_path($path))
-                ->format('webp')
-                ->quality(80)
-                ->save($webp_path);
-
-            $images['webp'] = asset('storage/uploads/users/webp/'.Str::replaceLast('.'.$avatar->getClientOriginalExtension(), '.webp', $avatarName));
+            $images = upload_file($request->file('avatar'), 'users');
         }
         $user->update([
             'name' => $request->name,

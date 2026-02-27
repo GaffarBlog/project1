@@ -18,6 +18,10 @@ class Category extends Model
         'parent_id',
     ];
 
+    protected $casts = [
+        'images' => 'json',
+    ];
+
     public function Parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');

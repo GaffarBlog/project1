@@ -8,11 +8,11 @@
                     <h3 class="mb-0">Categories Management</h3>
                 </div>
                 <div class="col-sm-6">
-                    <div class="float-sm-end">
-                        <div class="float-sm-end">
+                    @if (has_permission("admin.products.index"))
+                        <div class="text-end">
                             <a class="btn btn-info btn-sm text-light" href="{{ route("admin.products.index") }}">Products</a>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -20,15 +20,57 @@
     <!--------Page Content---------->
     <section class="content">
         <div class="container-fluid">
+            @if (has_permission("admin.categories.create"))
+                <div class="card card-primary card-outline mb-4">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div class="card-title">Create User</div>
+                        </div>
+                    </div>
+                    <div class="card-body p-3 pb-3">
+                        <form action="{{ route("admin.categories.create") }}" enctype="multipart/form-data" method="POST">
+                            @csrf
+                            <input name="parent_id" type="hidden" value="{{ $parent_id }}">
+                            <div class="row row-gap-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="categoryName">Category Name</label>
+                                        <input class="form-control" id="categoryName" name="name" required type="text" value="{{ old("name") }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="categoryBanner">Category Banner</label>
+                                        <input class="form-control" id="categoryBanner" name="banner" type="file">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="categoryDescription">Description</label>
+                                        <textarea class="form-control" id="categoryDescription" name="description" rows="5">{{ old("description") }}</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="mt-3 text-end">
+                                <button class="btn btn-primary" type="submit">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            @endif
             <div class="card card-primary card-outline mb-4">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
-                        <div class="card-title">Categories: {{ $categories->total() }}</div>
-                        <div>
-                            @if (has_permission("admin.categories.createPage"))
-                                <a class="btn btn-primary btn-sm" href="{{ route("admin.categories.createPage") }}"><i class="bi bi-plus-lg"></i> Create</a>
+                        <div class="card-title">
+                            @if ($parent_id)
+                                Subcategory of : {{ $parent_categories->where("id", $parent_id)->first()->name ?? "--" }} ({{ $categories->total() }})
+                            @else
+                                Categories: {{ $categories->total() }}
                             @endif
-
+                        </div>
+                        <div>
+                            <a class="btn btn-primary" href="{{ route("admin.categories.index") }}">Back</a>
                         </div>
                     </div>
                 </div>
@@ -37,9 +79,7 @@
                         <thead>
                             <tr>
                                 <th scope="col" style="width: 15px">#</th>
-                                <th scope="col">Thumb</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Parent</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Action</th>
                             </tr>
@@ -48,15 +88,14 @@
                             @foreach ($categories as $item)
                                 <tr class="align-middle">
                                     <td>{{ $categories->perPage() * ($categories->currentPage() - 1) + $loop->iteration }}</td>
-                                    <td style="width: 50px">
-                                        @if (isset($item->images["webp"]))
-                                            <img alt="" class="img-thumbnail" src="{{ $item->images["webp"] }}">
+
+                                    <td>
+                                        @if ($item->parent_id)
+                                            {{ $item->name }}
                                         @else
-                                            <img alt="" class="img-thumbnail" src="{{ asset("assets/img/user-avatar.png") }}">
+                                            <a href="{{ route("admin.categories.index", ["parent_id" => $item->id]) }}">{{ $item->name }}</a>
                                         @endif
                                     </td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->Parent?->name ?? "None" }}</td>
 
                                     <td>
                                         @if ($item->status === "Active")
@@ -89,56 +128,19 @@
         </div>
     </section>
 
-    <!--------Create Modal---------->
-    <div class="modal" id="createModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Create User</h5>
-                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
-                </div>
-                <form action="{{ route("admin.users.create") }}" method="POST">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label class="form-label" for="userName">Name</label>
-                            <input class="form-control" id="userName" name="name" required type="text">
-                        </div>
-                        <div class="form-group mt-3">
-                            <label class="form-label" for="userEmail">Email</label>
-                            <input class="form-control" id="userEmail" name="email" required type="email">
-                        </div>
-                        <div class="form-group mt-3">
-                            <label class="form-label" for="userPassword">Password</label>
-                            <input class="form-control" id="userPassword" name="password" required type="password">
-                        </div>
-                        <div class="form-group mt-3">
-                            <label class="form-label" for="userConfirmPassword">Confirm Password</label>
-                            <input class="form-control" id="userConfirmPassword" name="password_confirmation" required type="password">
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
-                        <button class="btn btn-primary" type="submit">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <!--------Delete Modal---------->
     <div class="modal" id="deleteModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Delete User</h5>
+                    <h5 class="modal-title">Delete Category</h5>
                     <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
-                <form action="{{ route("admin.users.delete") }}" method="POST">
+                <form action="{{ route("admin.categories.delete") }}" method="POST">
                     @csrf
                     <input id="deleteId" name="id" type="hidden">
                     <div class="modal-body">
-                        <p>Are you sure you want to delete this user?</p>
+                        <p>Are you sure you want to delete this category?</p>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
@@ -149,7 +151,3 @@
         </div>
     </div>
 @endsection
-
-@push("js")
-    <script src="{{ asset("js/admin/users.js") }}"></script>
-@endpush

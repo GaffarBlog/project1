@@ -62,20 +62,7 @@ class UserController extends Controller
 
         ];
         if ($request->file('avatar')) {
-            $avatar = $request->file('avatar');
-            $avatarName = time().'.'.$avatar->getClientOriginalExtension();
-            $avatar->move('storage/uploads/users', $avatarName);
-            $path = 'storage/uploads/users/'.$avatarName;
-            $images['original'] = asset($path);
-            $webp_path = public_path('storage/uploads/users/webp/'.Str::replaceLast('.'.$avatar->getClientOriginalExtension(), '.webp', $avatarName));
-            Image::load(public_path($path))
-                ->format('webp')
-                ->quality(80)
-                ->save($webp_path);
-
-            $images['webp'] = asset('storage/uploads/users/webp/'.Str::replaceLast('.'.$avatar->getClientOriginalExtension(), '.webp', $avatarName));
-            $userdata['images'] = $images;
-            // return $userdata;
+            $userdata['images'] = upload_file($request->file('avatar'), 'users');
         }
         User::updateOrCreate($userdata);
 
@@ -85,7 +72,6 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        // return $user;
         $roles = Role::select('id', 'name')->get();
 
         return view('admin.users.edit', compact('user', 'roles'));

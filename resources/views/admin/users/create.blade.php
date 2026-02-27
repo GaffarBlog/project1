@@ -1,5 +1,5 @@
-@extends('admin.layouts.main')
-@section('content')
+@extends("admin.layouts.main")
+@section("content")
     <!--------Page Heading & Breadcrumb---------->
     <div class="app-content-header">
         <div class="container-fluid">
@@ -8,11 +8,9 @@
                     <h3 class="mb-0">Users Management</h3>
                 </div>
                 <div class="col-sm-6">
-                    <div class="float-sm-end">
-                        <div class="float-sm-end">
-                            <a href="{{ route('admin.users.index') }}" class="btn btn-info btn-sm text-light">Users List</a>
-                            <a href="{{ route('admin.user-role.index') }}" class="btn btn-info btn-sm text-light">User Role</a>
-                        </div>
+                    <div class="text-end">
+                        <a class="btn btn-info btn-sm text-light" href="{{ route("admin.users.index") }}">Users List</a>
+                        <a class="btn btn-info btn-sm text-light" href="{{ route("admin.user-role.index") }}">User Role</a>
                     </div>
                 </div>
             </div>
@@ -28,110 +26,110 @@
                     </div>
                 </div>
                 <div class="card-body p-3 pb-3">
-                    <form action="{{ route('admin.users.create') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route("admin.users.create") }}" enctype="multipart/form-data" method="POST">
                         @csrf
                         <div class="row row-gap-3">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userName" class="form-label">Name</label>
-                                    <input type="text" class="form-control" value="{{ old('name') }}" id="userName" required name="name">
+                                    <label class="form-label" for="userName">Name</label>
+                                    <input class="form-control" id="userName" name="name" required type="text" value="{{ old("name") }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userEmail" class="form-label">Email</label>
-                                    <input type="email" class="form-control" value="{{ old('email') }}" id="userEmail" required name="email">
+                                    <label class="form-label" for="userEmail">Email</label>
+                                    <input class="form-control" id="userEmail" name="email" required type="email" value="{{ old("email") }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userUsername" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="userUsername" value="{{ old('username') }}" required name="username">
+                                    <label class="form-label" for="userUsername">Username</label>
+                                    <input class="form-control" id="userUsername" name="username" required type="text" value="{{ old("username") }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userRole" class="form-label">Role</label>
-                                    <select class="form-control" id="userRole" required name="role_id">
-                                        <option selected disabled value="">Select Role</option>
+                                    <label class="form-label" for="userRole">Role</label>
+                                    <select class="form-control" id="userRole" name="role_id" required>
+                                        <option disabled selected value="">Select Role</option>
                                         @foreach ($roles as $role)
-                                            <option @selected(old('role_id') === $role->id) value="{{ $role->id }}">{{ $role->name }}</option>
+                                            <option @selected(old("role_id") === $role->id) value="{{ $role->id }}">{{ $role->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userPhone" class="form-label">Phone</label>
-                                    <input type="text" class="form-control" value="{{ old('phone') }}" id="userPhone" name="phone">
+                                    <label class="form-label" for="userPhone">Phone</label>
+                                    <input class="form-control" id="userPhone" name="phone" type="text" value="{{ old("phone") }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userDateOfBirth" class="form-label">Date of Birth</label>
-                                    <input type="date" class="form-control" id="userDateOfBirth" value="{{ old('date_of_birth') }}" name="date_of_birth">
+                                    <label class="form-label" for="userDateOfBirth">Date of Birth</label>
+                                    <input class="form-control" id="userDateOfBirth" name="date_of_birth" type="date" value="{{ old("date_of_birth") }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userGender" class="form-label">Gender</label>
-                                    <select class="form-control" id="userGender" required name="gender">
-                                        <option selected disabled value="">Select Gender</option>
-                                        <option @selected(old('gender') === 'Male') value="Male">Male</option>
-                                        <option @selected(old('gender') === 'Female') value="Female">Female</option>
-                                        <option @selected(old('gender') === 'Third Gender') value="Third Gender">Third Gender</option>
+                                    <label class="form-label" for="userGender">Gender</label>
+                                    <select class="form-control" id="userGender" name="gender" required>
+                                        <option disabled selected value="">Select Gender</option>
+                                        <option @selected(old("gender") === "Male") value="Male">Male</option>
+                                        <option @selected(old("gender") === "Female") value="Female">Female</option>
+                                        <option @selected(old("gender") === "Third Gender") value="Third Gender">Third Gender</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userCountry" class="form-label">Country</label>
-                                    <input type="text" class="form-control" id="userCountry" name="country" value="{{ old('country') }}">
+                                    <label class="form-label" for="userCountry">Country</label>
+                                    <input class="form-control" id="userCountry" name="country" type="text" value="{{ old("country") }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userCity" class="form-label">City</label>
-                                    <input type="text" class="form-control" id="userCity" name="city" value="{{ old('city') }}">
+                                    <label class="form-label" for="userCity">City</label>
+                                    <input class="form-control" id="userCity" name="city" type="text" value="{{ old("city") }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userZipCode" class="form-label">Zip Code</label>
-                                    <input type="text" class="form-control" id="userZipCode" name="zip" value="{{ old('zip') }}">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="userAddress" class="form-label">Address</label>
-                                    <textarea name="address" id="userAddress" class="form-control" rows="5">{{ old('address') }}</textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="userAvatar" class="form-label">Avatar</label>
-                                    <input type="file" class="form-control imageInput" data-target="userAvatarPreview" id="userAvatar" name="avatar">
-
-                                    <img id="userAvatarPreview" class="img-thumbnail img-preview" src="{{ asset('assets/img/user-avatar.png') }}">
+                                    <label class="form-label" for="userZipCode">Zip Code</label>
+                                    <input class="form-control" id="userZipCode" name="zip" type="text" value="{{ old("zip") }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userStatus" class="form-label">Status</label>
-                                    <select class="form-control" id="userStatus" required name="status">
+                                    <label class="form-label" for="userAddress">Address</label>
+                                    <textarea class="form-control" id="userAddress" name="address" rows="5">{{ old("address") }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="userAvatar">Avatar</label>
+                                    <input class="form-control imageInput" data-target="userAvatarPreview" id="userAvatar" name="avatar" type="file">
+
+                                    <img class="img-thumbnail img-preview" id="userAvatarPreview" src="{{ asset("assets/img/user-avatar.png") }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="userStatus">Status</label>
+                                    <select class="form-control" id="userStatus" name="status" required>
                                         <option value="">Select Status</option>
-                                        <option @selected(old('status') === 'Active') value="Active">Active</option>
-                                        <option @selected(old('status') === 'Inactive') value="Inactive">Inactive</option>
-                                        <option @selected(old('status') === 'Banned') value="Banned">Banned</option>
+                                        <option @selected(old("status") === "Active") value="Active">Active</option>
+                                        <option @selected(old("status") === "Inactive") value="Inactive">Inactive</option>
+                                        <option @selected(old("status") === "Banned") value="Banned">Banned</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        <div class="text-end mt-3">
-                            <button type="submit" class="btn btn-primary">Update</button>
+                        <div class="mt-3 text-end">
+                            <button class="btn btn-primary" type="submit">Update</button>
                         </div>
                     </form>
                 </div>

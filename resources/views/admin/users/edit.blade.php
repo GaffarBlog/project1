@@ -1,5 +1,5 @@
-@extends('admin.layouts.main')
-@section('content')
+@extends("admin.layouts.main")
+@section("content")
     <!--------Page Heading & Breadcrumb---------->
     <div class="app-content-header">
         <div class="container-fluid">
@@ -8,11 +8,13 @@
                     <h3 class="mb-0">Users Management</h3>
                 </div>
                 <div class="col-sm-6">
-                    <div class="float-sm-end">
-                        <div class="float-sm-end">
-                            <a href="{{ route('admin.users.index') }}" class="btn btn-info btn-sm text-light">Users List</a>
-                            <a href="{{ route('admin.user-role.index') }}" class="btn btn-info btn-sm text-light">User Role</a>
-                        </div>
+                    <div class="text-end">
+                        @if (has_permission("admin.users.index"))
+                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.users.index") }}">Users List</a>
+                        @endif
+                        @if (has_permission("admin.user-role.index"))
+                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.user-role.index") }}">User Role</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -28,33 +30,33 @@
                     </div>
                 </div>
                 <div class="card-body p-3 pb-3">
-                    <form action="{{ route('admin.users.update') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route("admin.users.update") }}" enctype="multipart/form-data" method="POST">
                         @csrf
-                        <input type="hidden" name="id" value="{{ $user->id }}">
+                        <input name="id" type="hidden" value="{{ $user->id }}">
                         <div class="row row-gap-3">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userName" class="form-label">Name</label>
-                                    <input type="text" value="{{ $user->name }}" class="form-control" id="userName" required name="name">
+                                    <label class="form-label" for="userName">Name</label>
+                                    <input class="form-control" id="userName" name="name" required type="text" value="{{ $user->name }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userEmail" class="form-label">Email</label>
-                                    <input type="email" value="{{ $user->email }}" class="form-control" id="userEmail" required name="email">
+                                    <label class="form-label" for="userEmail">Email</label>
+                                    <input class="form-control" id="userEmail" name="email" required type="email" value="{{ $user->email }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userUsername" class="form-label">Username</label>
-                                    <input type="text" value="{{ $user->username }}" class="form-control" id="userUsername" required name="username">
+                                    <label class="form-label" for="userUsername">Username</label>
+                                    <input class="form-control" id="userUsername" name="username" required type="text" value="{{ $user->username }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userRole" class="form-label">Role</label>
-                                    <select class="form-control" id="userRole" required name="role_id">
-                                        <option selected disabled value="">Select Role</option>
+                                    <label class="form-label" for="userRole">Role</label>
+                                    <select class="form-control" id="userRole" name="role_id" required>
+                                        <option disabled selected value="">Select Role</option>
                                         @foreach ($roles as $role)
                                             <option @selected($user->role_id == $role->id) value="{{ $role->id }}">{{ $role->name }}</option>
                                         @endforeach
@@ -63,76 +65,76 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userPhone" class="form-label">Phone</label>
-                                    <input type="text" value="{{ $user->phone }}" class="form-control" id="userPhone" name="phone">
+                                    <label class="form-label" for="userPhone">Phone</label>
+                                    <input class="form-control" id="userPhone" name="phone" type="text" value="{{ $user->phone }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userDateOfBirth" class="form-label">Date of Birth</label>
-                                    <input type="date" value="{{ $user->date_of_birth }}" class="form-control" id="userDateOfBirth" name="date_of_birth">
+                                    <label class="form-label" for="userDateOfBirth">Date of Birth</label>
+                                    <input class="form-control" id="userDateOfBirth" name="date_of_birth" type="date" value="{{ $user->date_of_birth }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userGender" class="form-label">Gender</label>
-                                    <select class="form-control" id="userGender" required name="gender">
-                                        <option selected disabled value="">Select Gender</option>
-                                        <option @selected($user->gender === 'Male') value="Male">Male</option>
-                                        <option @selected($user->gender === 'Female') value="Female">Female</option>
-                                        <option @selected($user->gender === 'Third Gender') value="Third Gender">Third Gender</option>
+                                    <label class="form-label" for="userGender">Gender</label>
+                                    <select class="form-control" id="userGender" name="gender" required>
+                                        <option disabled selected value="">Select Gender</option>
+                                        <option @selected($user->gender === "Male") value="Male">Male</option>
+                                        <option @selected($user->gender === "Female") value="Female">Female</option>
+                                        <option @selected($user->gender === "Third Gender") value="Third Gender">Third Gender</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userCountry" class="form-label">Country</label>
-                                    <input type="text" value="{{ $user->country }}" class="form-control" id="userCountry" name="country">
+                                    <label class="form-label" for="userCountry">Country</label>
+                                    <input class="form-control" id="userCountry" name="country" type="text" value="{{ $user->country }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userCity" class="form-label">City</label>
-                                    <input type="text" value="{{ $user->city }}" class="form-control" id="userCity" name="city">
+                                    <label class="form-label" for="userCity">City</label>
+                                    <input class="form-control" id="userCity" name="city" type="text" value="{{ $user->city }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userZipCode" class="form-label">Zip Code</label>
-                                    <input type="text" value="{{ $user->zip }}" class="form-control" id="userZipCode" name="zip">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="userAddress" class="form-label">Address</label>
-                                    <textarea name="address" id="userAddress" class="form-control" rows="5">{{ $user->address }}</textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="userAvatar" class="form-label">Avatar</label>
-                                    <input type="file" class="form-control imageInput" data-target="userAvatarPreview" id="userAvatar" name="avatar">
-
-                                    <img id="userAvatarPreview" class="img-thumbnail img-preview" src="{{ isset($user->images['webp']) ? $user->images['webp'] : asset('assets/img/user-avatar.png') }}">
+                                    <label class="form-label" for="userZipCode">Zip Code</label>
+                                    <input class="form-control" id="userZipCode" name="zip" type="text" value="{{ $user->zip }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="userStatus" class="form-label">Status</label>
-                                    <select class="form-control" id="userStatus" required name="status">
+                                    <label class="form-label" for="userAddress">Address</label>
+                                    <textarea class="form-control" id="userAddress" name="address" rows="5">{{ $user->address }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="userAvatar">Avatar</label>
+                                    <input class="form-control imageInput" data-target="userAvatarPreview" id="userAvatar" name="avatar" type="file">
+
+                                    <img class="img-thumbnail img-preview" id="userAvatarPreview" src="{{ isset($user->images["webp"]) ? $user->images["webp"] : asset("assets/img/user-avatar.png") }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="userStatus">Status</label>
+                                    <select class="form-control" id="userStatus" name="status" required>
                                         <option value="">Select Status</option>
-                                        <option @selected($user->status === 'Active') value="Active">Active</option>
-                                        <option @selected($user->status === 'Inactive') value="Inactive">Inactive</option>
-                                        <option @selected($user->status === 'Banned') value="Banned">Banned</option>
+                                        <option @selected($user->status === "Active") value="Active">Active</option>
+                                        <option @selected($user->status === "Inactive") value="Inactive">Inactive</option>
+                                        <option @selected($user->status === "Banned") value="Banned">Banned</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        <div class="text-end mt-3">
-                            <button type="submit" class="btn btn-primary">Update</button>
+                        <div class="mt-3 text-end">
+                            <button class="btn btn-primary" type="submit">Update</button>
                         </div>
                     </form>
                 </div>

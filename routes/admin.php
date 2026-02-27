@@ -55,8 +55,7 @@ Route::middleware(['web', 'AdminMiddleware'])->prefix('admin-area')->group(funct
         Route::post('/products-delete', 'delete')->name('admin.products.delete');
     });
     Route::controller(CategoryController::class)->group(function () {
-        Route::get('/categories', 'index')->name('admin.categories.index');
-        Route::get('/categories/create', 'create')->name('admin.categories.createPage');
+        Route::get('/categories/{parent_id?}', 'index')->name('admin.categories.index');
         Route::post('/categories/create', 'create')->name('admin.categories.create');
         Route::get('/categories-edit/{id}', 'edit')->name('admin.categories.edit');
         Route::post('/categories-update', 'update')->name('admin.categories.update');

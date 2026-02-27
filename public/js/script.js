@@ -18,4 +18,11 @@ $(document).ready(function () {
     setTimeout(function () {
         $(".alert-box").fadeOut("slow");
     }, 6000);
+
+    // Open delete modal and set user id
+    $(".delete_btn").on("click", function () {
+        const id = $(this).data("id");
+        $("#deleteId").val(id);
+        $("#deleteModal").modal("show");
+    });
 });

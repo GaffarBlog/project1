@@ -8,11 +8,13 @@
                     <h3 class="mb-0">Users Management</h3>
                 </div>
                 <div class="col-sm-6">
-                    <div class="float-sm-end">
-                        <div class="float-sm-end">
-                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.user-role.index") }}">User Role</a>
+                    @if (has_permission("admin.user-role.index"))
+                        <div class="text-end">
+                            @if (has_permission("admin.user-role.index"))
+                                <a class="btn btn-info btn-sm text-light" href="{{ route("admin.user-role.index") }}">User Role</a>
+                            @endif
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
