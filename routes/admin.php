@@ -56,8 +56,9 @@ Route::middleware(['web', 'AdminMiddleware'])->prefix('admin-area')->group(funct
     });
     Route::controller(ProductController::class)->group(function () {
         Route::get('/products', 'index')->name('admin.products.view');
-        Route::get('/products/create', 'create')->name('admin.products.createPage');
+        Route::get('/products/create', 'create_page')->name('admin.products.createPage');
         Route::post('/products/create', 'create')->name('admin.products.create');
+        Route::get('/products/subcategories/{category_id}', 'subcategories')->name('admin.products.subcategories');
         Route::get('/products-edit/{id}', 'edit')->name('admin.products.edit');
         Route::post('/products-update', 'update')->name('admin.products.update');
         Route::post('/products-delete', 'delete')->name('admin.products.delete');
