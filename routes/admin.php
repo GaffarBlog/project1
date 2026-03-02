@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\LoginController;
 use App\Http\Controllers\admin\PermissionController;
+use App\Http\Controllers\admin\ProductAttributeController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\UserController;
@@ -60,5 +61,8 @@ Route::middleware(['web', 'AdminMiddleware'])->prefix('admin-area')->group(funct
         Route::get('/products-edit/{id}', 'edit')->name('admin.products.edit');
         Route::post('/products-update', 'update')->name('admin.products.update');
         Route::post('/products-delete', 'delete')->name('admin.products.delete');
+    });
+    Route::controller(ProductAttributeController::class)->group(function () {
+        Route::get('/attributes/{attr?}', 'index')->name('admin.attributes.view');
     });
 });

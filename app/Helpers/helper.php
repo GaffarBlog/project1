@@ -41,6 +41,11 @@ function sidebarList()
                 'route' => 'admin.categories.view',
                 'permission' => has_permission('admin.categories.view'),
             ],
+            'Product Attributes' => [
+                'icon' => 'bi bi-circle',
+                'route' => 'admin.attributes.view',
+                'permission' => has_permission('admin.attributes.view'),
+            ],
         ],
     ];
 }

@@ -18,8 +18,6 @@ class CategoryController extends Controller
                 $query->whereNull('parent_id');
             }
         })->withCount('Subcategories')->paginate(20);
-
-        // return $categories;
         $parent_categories = Category::whereNull('parent_id')->orderBy('order')->get();
 
         return view('admin.categories.index', compact('categories', 'parent_categories', 'parent_id'));
@@ -78,7 +76,7 @@ class CategoryController extends Controller
             'images' => $images,
         ]);
 
-        return redirect()->route('admin.categories.view')->with('success', 'Category updated successfully.');
+        return redirect()->route('admin.categories.view', ['parent_id' => $category->parent_id ?? null])->with('success', 'Category updated successfully.');
     }
 
     // Delete user role
