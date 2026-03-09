@@ -202,25 +202,10 @@
                                 <h6 class="text-muted fw-semibold border-bottom border-secondary mb-2 mt-2 pb-2">Warranty</h6>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="form-label">Warranty Available?</label>
-                                    <select class="form-control" name="is_warranty">
-                                        <option @selected(old("is_warranty") == "0") value="0">No</option>
-                                        <option @selected(old("is_warranty") == "1") value="1">Yes</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Warranty Plan</label>
-                                    <select class="form-control" name="warranty_id">
-                                        <option disabled selected>Select Warranty</option>
-                                        {{-- @foreach ($warranties as $warranty)
-                                        <option value="{{ $warranty->id }}">{{ $warranty->name }}</option>
-                                        @endforeach --}}
-                                    </select>
+                                    <label class="form-label">Warranty</label>
+                                    <textarea class="form-control" name="warranty" rows="3"></textarea>
                                 </div>
                             </div>
 
@@ -228,17 +213,6 @@
                             <div class="col-md-12 mt-5">
                                 <h6 class="text-muted fw-semibold border-bottom border-secondary mb-2 mt-2 pb-2">Visibility & SEO</h6>
                             </div>
-
-                            {{-- <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Status</label>
-                                    <select class="form-control" name="status">
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
-                                    </select>
-                                </div>
-                            </div> --}}
-
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Tags <small class="text-muted">(comma separated)</small></label>

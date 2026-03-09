@@ -32,16 +32,17 @@ return new class extends Migration
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->text('tags')->nullable();
-            $table->boolean('is_warranty')->default(false);
-            $table->unsignedBigInteger('warranty_id')->nullable();
+            $table->text('warranty')->nullable();
             $table->boolean('is_free_shipping')->default(false);
-            $table->unsignedBigInteger('shipping_id')->nullable();
+            $table->boolean('is_multiple_by_quantity')->default(false);
+            $table->enum('shipping_type', ['Normal', 'Express'])->default('Normal');
+            $table->decimal('cost', 10, 2)->default(0);
+            $table->integer('estimated_delivery_time')->default(0);
+            $table->string('shipping_note')->nullable();
             $table->unsignedBigInteger('unit_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
             $table->foreign('subcategory_id')->references('id')->on('categories')->onDelete('set null');
             $table->foreign('unit_id')->references('id')->on('product_units')->onDelete('set null');
-            $table->foreign('warranty_id')->references('id')->on('warranties')->onDelete('set null');
-            $table->foreign('shipping_id')->references('id')->on('shippings')->onDelete('set null');
             $table->timestamps();
         });
     }
