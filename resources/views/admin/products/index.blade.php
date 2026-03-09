@@ -27,11 +27,7 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <div class="card-title">
-                            @if ($parent_id)
-                                Subcategory of : {{ $parent_categories->where("id", $parent_id)->first()->name ?? "--" }} ({{ $categories->total() }})
-                            @else
-                                Categories: {{ $categories->total() }}
-                            @endif
+                            Products: {{ $products->total() }}
                         </div>
                         <div>
                             @if (has_permission("admin.products.createPage"))
@@ -46,31 +42,38 @@
                             <tr>
                                 <th scope="col" style="width: 15px">#</th>
                                 <th scope="col">Name</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Subcategory</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">SKU</th>
+                                <th scope="col">Stock</th>
+                                <th scope="col">Featured</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($categories as $item)
+                            @foreach ($products as $item)
                                 <tr class="align-middle">
-                                    <td>{{ $categories->perPage() * ($categories->currentPage() - 1) + $loop->iteration }}</td>
+                                    <td>{{ $products->perPage() * ($products->currentPage() - 1) + $loop->iteration }}</td>
 
                                     <td>
-                                        @if ($item->parent_id)
-                                            {{ $item->name }}
-                                        @else
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <a href="{{ route("admin.categories.view", ["parent_id" => $item->id]) }}">{{ $item->name }}</a>
-                                                <span class="badge text-bg-info text-white">{{ $item->subcategories_count ?? 0 }}</span>
-                                            </div>
-                                        @endif
+                                        {{ $item->title }}
                                     </td>
 
+                                    <td>{{ $item->Category?->name }}</td>
+                                    <td>{{ $item->Subcategory?->name }}</td>
+                                    <td>{{ $item->price }}</td>
+                                    <td>{{ $item->sku }}</td>
+                                    <td>{{ $item->quantity }}</td>
+                                    <td>{{ $item->is_featured }}</td>
                                     <td>
                                         @if ($item->status === "Active")
                                             <span class="badge text-bg-success">Active</span>
-                                        @else
+                                        @elseif($item->status === "Inactive")
                                             <span class="badge text-bg-warning">Inactive</span>
+                                        @else
+                                            <span class="badge text-bg-danger">Banned</span>
                                         @endif
                                     </td>
                                     <td>
@@ -90,29 +93,8 @@
                     </table>
 
                     <div class="mt-3 px-2">
-                        {{ $categories->links() }}
+                        {{ $products->links() }}
                     </div>
-                </div>
-            </div>
-            <div class="card card-primary card-outline">
-                <div class="card-header">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button aria-controls="home" aria-selected="true" class="nav-link active" data-bs-target="#home" data-bs-toggle="tab" id="home-tab" role="tab" type="button">Home</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button aria-controls="profile" aria-selected="false" class="nav-link" data-bs-target="#profile" data-bs-toggle="tab" id="profile-tab" role="tab" type="button">Profile</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button aria-controls="contact" aria-selected="false" class="nav-link" data-bs-target="#contact" data-bs-toggle="tab" id="contact-tab" role="tab" type="button">Contact</button>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="tab-content" id="myTabContent">
-                    <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">...</div>
-                    <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">...</div>
-                    <div aria-labelledby="contact-tab" class="tab-pane fade" id="contact" role="tabpanel">...</div>
                 </div>
             </div>
         </div>
@@ -126,11 +108,11 @@
                     <h5 class="modal-title">Delete Category</h5>
                     <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
-                <form action="{{ route("admin.categories.delete") }}" method="POST">
+                <form action="{{ route("admin.products.delete") }}" method="POST">
                     @csrf
                     <input id="deleteId" name="id" type="hidden">
                     <div class="modal-body">
-                        <p>Are you sure you want to delete this category?</p>
+                        <p>Are you sure you want to delete this product?</p>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>

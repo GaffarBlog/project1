@@ -1,0 +1,72 @@
+[
+    {
+        "title": "Luminary X1 Noise-Canceling Headphones",
+        "short_description": "Experience unparalleled acoustic precision with the Luminary X1, featuring advanced 40mm graphene drivers, industry-leading active noise cancellation, and an industry-topping 40-hour battery life for uninterrupted listening.",
+        "description": "The Luminary X1 represents the pinnacle of personal audio engineering. Equipped with our proprietary 'SilenceCore' active noise cancellation, it filters out up to 98% of ambient environmental noise, making it the perfect companion for frequent travelers and open-office professionals. The ear cups are crafted from premium protein leather and pressure-relieving memory foam, ensuring comfort even during 10-hour flights. With built-in AI voice enhancement, your calls remain crystal clear regardless of wind or background chatter. It supports LDAC, AAC, and SBC codecs to ensure high-resolution audio over Bluetooth 5.2.",
+        "pricing_and_discount": {
+            "original_price": 299.99,
+            "discount_percentage": 15,
+            "final_price": 254.99,
+            "currency": "USD"
+        },
+        "tags": "electronics, audio, wireless, premium, travel",
+        "meta_title": "Luminary X1 Wireless ANC Headphones | Premium Sound",
+        "meta_description": "Upgrade your audio with the Luminary X1. 40-hour battery, graphene drivers, and elite noise cancellation. Shop the premium collection."
+    },
+    {
+        "title": "Eco-Leaf Bamboo Standing Desk",
+        "short_description": "A sustainable, dual-motor electric standing desk crafted from 100% renewable Moso bamboo, featuring four programmable height presets and a whisper-quiet transition mechanism for the modern professional.",
+        "description": "Elevate your workday with the Eco-Leaf Bamboo Standing Desk. Unlike cheaper laminate alternatives, our desktop is harvested from sustainable bamboo forests and treated with a scratch-resistant, UV-cured finish. The heavy-duty steel frame is powered by a dual-motor system capable of lifting up to 125kg with a noise level below 45 decibels. The integrated digital control panel allows you to save your favorite sitting and standing heights, encouraging movement throughout the day to reduce back strain and increase productivity. Each desk includes a built-in cable management tray to keep your workspace clutter-free.",
+        "pricing_and_discount": {
+            "original_price": 549.0,
+            "discount_percentage": 10,
+            "final_price": 494.1,
+            "currency": "USD"
+        },
+        "tags": "furniture, office, eco-friendly, ergonomic, productivity",
+        "meta_title": "Eco-Leaf Bamboo Electric Standing Desk | Sustainable Office",
+        "meta_description": "The ultimate ergonomic solution. Eco-Leaf offers a whisper-quiet dual-motor bamboo desk with 4 memory presets. Improve your posture today."
+    },
+    {
+        "title": "Aura Mist Ceramic Ultrasonic Diffuser",
+        "short_description": "A handcrafted ceramic essential oil diffuser that combines minimalist aesthetic design with 500ml high-capacity ultrasonic technology for 12 hours of continuous aromatherapy and mood lighting.",
+        "description": "The Aura Mist is designed to be a centerpiece of wellness in your home. Encased in a matte, hand-finished ceramic shell, this diffuser uses high-frequency ultrasonic vibrations to turn water and essential oils into a fine, cool mist without using heat—preserving the therapeutic properties of your oils. It features an extra-large 500ml reservoir, allowing it to run through the entire night. Choose from seven soft LED colors to match your mood, or use the 'candle flicker' mode for a cozy evening glow. Safety is paramount, which is why it includes an automatic shut-off sensor that activates the moment the water level runs low.",
+        "pricing_and_discount": {
+            "original_price": 75.0,
+            "discount_percentage": 20,
+            "final_price": 60.0,
+            "currency": "USD"
+        },
+        "tags": ["home decor", "wellness", "aromatherapy", "gift ideas", "relaxation"],
+        "meta_title": "Aura Mist Ceramic Essential Oil Diffuser | 500ml Capacity",
+        "meta_description": "Handcrafted ceramic design meets 12-hour ultrasonic misting. The Aura Mist diffuser is the perfect addition to any modern home. Shop now."
+    },
+    {
+        "title": "Titan Grip 20kg Adjustable Dumbbell",
+        "short_description": "A space-saving strength training solution that replaces five traditional dumbbells with a single rapid-dial weight adjustment system ranging from 4kg to 20kg for versatile home workouts.",
+        "description": "Stop cluttering your home gym with multiple weight sets. The Titan Grip Adjustable Dumbbell utilizes a patented interlocking plate system that allows you to change your resistance in less than three seconds. Simply turn the dial to your desired weight and lift. The handle features a diamond-knurled steel grip for maximum security during heavy presses and rows. The plates are coated in a durable thermoplastic rubber to prevent clanking and protect your floors from scratches. Whether you are doing high-rep HIIT training or heavy hypertrophy work, the Titan Grip adapts to your fitness journey as you get stronger.",
+        "pricing_and_discount": {
+            "original_price": 210.0,
+            "discount_percentage": 15,
+            "final_price": 178.5,
+            "currency": "USD"
+        },
+        "tags": "fitness, strength, home gym, adjustable, workout",
+        "meta_title": "Titan Grip Adjustable Dumbbell (20kg) | Pro Home Fitness",
+        "meta_description": "Transform your home workout with the Titan Grip. 5 weight settings in one compact dumbbell. Durable steel construction. Order now."
+    },
+    {
+        "title": "Zenith Solar Expedition Power Bank",
+        "short_description": "A ruggedized 20,000mAh portable charger featuring a high-efficiency solar panel, IP67 waterproof rating, and a 400-lumen emergency flashlight for serious outdoor adventures.",
+        "description": "Engineered for the most demanding environments on Earth, the Zenith Solar Expedition is more than just a battery—it’s a survival tool. The massive 20,000mAh capacity can charge a standard smartphone up to seven times. When you're miles from the nearest outlet, the integrated monocrystalline solar panel provides an emergency trickle charge to keep your GPS and communication devices alive. The outer shell is reinforced with shock-absorbing TPU and is fully sealed against dust and water immersion. It features dual USB-A ports and a 20W USB-C Power Delivery port to fast-charge your laptop or tablet while you're off the grid.",
+        "pricing_and_discount": {
+            "original_price": 110.0,
+            "discount_percentage": 25,
+            "final_price": 82.5,
+            "currency": "USD"
+        },
+        "tags": "camping, tech, outdoors, power, survival",
+        "meta_title": "Zenith 20,000mAh Solar Power Bank | Waterproof & Rugged",
+        "meta_description": "The ultimate outdoor power solution. IP67 waterproof, solar-ready, and 20,000mAh capacity. Stay charged anywhere in the world."
+    }
+]

@@ -14,6 +14,10 @@
 
         <!--begin::Fonts-->
         <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" media="print" onload="this.media='all'" rel="stylesheet" />
+        {{-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet"> --}}
+        {{-- <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" rel="stylesheet"> --}}
+        {{-- <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" rel="stylesheet"> --}}
+        {{-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> --}}
 
         <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet" />
         <link href="{{ asset("css/adminlte.min.css") }}" rel="stylesheet" />
@@ -38,7 +42,7 @@
             <main class="app-main">
                 @if ($errors->any())
                     <div class="toast-container alert-box position-fixed end-0 top-0 p-3">
-                        <div aria-atomic="true" aria-live="assertive" class="toast toast-danger fade show" id="toastPrimary" role="alert">
+                        <div aria-atomic="true" aria-live="assertive" class="toast toast-danger show" id="toastPrimary" role="alert">
                             <div class="toast-header">
                                 <i class="bi bi-circle me-2"></i>
                                 <strong class="me-auto">Error</strong>
@@ -56,7 +60,7 @@
                 @endif
                 @session("success")
                     <div class="toast-container alert-box position-fixed end-0 top-0 p-3">
-                        <div aria-atomic="true" aria-live="assertive" class="toast toast-success fade show" id="toastPrimary" role="alert">
+                        <div aria-atomic="true" aria-live="assertive" class="toast toast-success show" id="toastPrimary" role="alert">
                             <div class="toast-header">
                                 <i class="bi bi-circle me-2"></i>
                                 <strong class="me-auto">Success</strong>
@@ -68,7 +72,7 @@
                 @endsession
                 @session("error")
                     <div class="toast-container alert-box position-fixed end-0 top-0 p-3">
-                        <div aria-atomic="true" aria-live="assertive" class="toast toast-danger fade show" id="toastPrimary" role="alert">
+                        <div aria-atomic="true" aria-live="assertive" class="toast toast-danger show" id="toastPrimary" role="alert">
                             <div class="toast-header">
                                 <i class="bi bi-circle me-2"></i>
                                 <strong class="me-auto">Error</strong>
@@ -78,9 +82,10 @@
                         </div>
                     </div>
                 @endsession
+
                 @session("warning")
                     <div class="toast-container alert-box position-fixed end-0 top-0 p-3">
-                        <div aria-atomic="true" aria-live="assertive" class="toast toast-warning fade show" id="toastPrimary" role="alert">
+                        <div aria-atomic="true" aria-live="assertive" class="toast toast-warning show" id="toastPrimary" role="alert">
                             <div class="toast-header">
                                 <i class="bi bi-circle me-2"></i>
                                 <strong class="me-auto">Warning</strong>
