@@ -34,7 +34,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body p-0 pb-3">
+                <div class="card-body overflow-x-auto p-0 pb-3">
                     <table class="table-bordered table-hover dataTable dtr-inline table" role="table">
                         <thead>
                             <tr>

@@ -39,7 +39,7 @@
                                 <div class="d-flex align-items-center justify-content-between border-bottom border-secondary pb-2">
                                     <h6 class="text-muted fw-semibold">Basic Information</h6>
                                     <div class="toggle-switch">
-                                        <input id="isFeatured" name="is_featured" type="checkbox" value="true">
+                                        <input @checked(old("is_featured")) id="isFeatured" name="is_featured" type="checkbox" value="true">
                                         <label for="isFeatured"></label>
                                         <span>Mark as Featured Product</span>
                                     </div>
@@ -51,18 +51,9 @@
                                     <input class="form-control" id="productTitle" name="title" placeholder="e.g. Cotton Summer Shirt" required type="text" value="{{ old("title") }}">
                                 </div>
                             </div>
-
-                            {{-- <div class="col-md-6">
-                                <label class="form-label" for="productSku">SKU <span class="text-danger">*</span></label>
-                                <div class="input-group mb-3">
-                                    <input class="form-control" name="sku" placeholder="e.g. SKU-00123" required type="text" value="{{ old("sku") }}" />
-                                    <button class="input-group-text generate-sku" type="button">Generate</button>
-                                </div>
-
-                            </div> --}}
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label">Unit</label>
+                                    <label class="form-label">Unit <span class="text-danger">*</span></label>
                                     <select class="form-control" name="unit_id">
                                         <option disabled selected>Select Unit</option>
                                         @foreach ($units as $unit)
@@ -73,7 +64,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label">Category</label>
+                                    <label class="form-label">Category <span class="text-danger">*</span></label>
                                     <select class="form-control product_category" name="category_id">
                                         <option disabled selected>Select Category</option>
                                         @foreach ($categories as $item)
@@ -85,7 +76,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label">Subcategory</label>
+                                    <label class="form-label">Subcategory <span class="text-danger">*</span></label>
                                     <select class="form-control product_subcategories" name="subcategory_id">
                                         <option disabled selected>Select Category First</option>
                                     </select>
@@ -94,7 +85,7 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="form-label" for="productShortDesc">Short Description</label>
+                                    <label class="form-label" for="productShortDesc">Short Description <span class="text-danger">*</span></label>
                                     <textarea class="form-control" name="short_description" placeholder="Brief summary shown in product listings..." rows="3">{{ old("short_description") }}</textarea>
                                 </div>
                             </div>
@@ -114,7 +105,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" for="productPrice">Original Price <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="productPrice" name="price" placeholder="0.00" required type="number" value="{{ old("price") }}">
+                                    <input class="form-control" id="productPrice" name="price" placeholder="0.00" required type="number" value="{{ old("price", 0) }}">
                                 </div>
                             </div>
 
@@ -123,8 +114,8 @@
                                     <label class="form-label" for="productDiscountType">Discount Type</label>
                                     <select class="form-control" id="productDiscountType" name="discount_type">
                                         <option disabled selected>Select Discount Type</option>
-                                        <option value="percentage">Percentage (%)</option>
-                                        <option value="fixed">Fixed Amount</option>
+                                        <option @selected(old("discount_type") === "percentage") value="percentage">Percentage (%)</option>
+                                        <option @selected(old("discount_type") === "fixed") value="fixed">Fixed Amount</option>
                                     </select>
                                 </div>
                             </div>
@@ -176,25 +167,31 @@
                             </div>
 
                             <div class="col-md-6">
+
                                 <div class="form-group">
-                                    <label class="form-label">Free Shipping?</label>
-                                    <select class="form-control" name="is_free_shipping">
-                                        <option @selected(old("is_free_shipping") == "0") value="0">No</option>
-                                        <option @selected(old("is_free_shipping") == "1") value="1">Yes</option>
-                                    </select>
+                                    <label class="form-label" for="shippingCost">Shipping Cost</label>
+                                    <input class="form-control" id="shippingCost" name="shipping_cost" type="number" value="{{ old("shipping_cost", 0) }}">
+                                </div>
+                                <div class="form-group mt-2">
+                                    <label class="form-label">Shipping Note</label>
+                                    <textarea class="form-control" name="shipping_note" rows="3">{{ old("shipping_note") }}</textarea>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Shipping Method</label>
-                                    <select class="form-control" name="shipping_id">
-                                        <option disabled selected>Select Shipping Method</option>
-                                        @foreach ($shippings as $shipping)
-                                            <option @selected(old("shipping_id") == $shipping->id) value="{{ $shipping->id }}">{{ $shipping->name }}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="d-flex align-items-center gap-5">
+                                    <div class="toggle-switch">
+                                        <input @checked(old("is_free_shipping")) id="isFreeShipping" name="is_free_shipping" type="checkbox" value="true">
+                                        <label for="isFreeShipping"></label>
+                                        <span>Free Shipping</span>
+                                    </div>
+                                    <div class="toggle-switch">
+                                        <input @checked(old("is_multiple_by_quantity")) id="is_multiple_by_quantity" name="is_multiple_by_quantity" type="checkbox" value="true">
+                                        <label for="is_multiple_by_quantity"></label>
+                                        <span>Is Multiple By Quantity</span>
+                                    </div>
                                 </div>
+
                             </div>
 
                             {{-- SECTION: Warranty --}}
@@ -205,7 +202,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Warranty</label>
-                                    <textarea class="form-control" name="warranty" rows="3"></textarea>
+                                    <textarea class="form-control" name="warranty" rows="3">{{ old("warranty") }}</textarea>
                                 </div>
                             </div>
 

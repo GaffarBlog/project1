@@ -36,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body p-0 pb-3">
+                <div class="card-body overflow-x-auto p-0 pb-3">
                     <table class="table-bordered table-hover dataTable dtr-inline table" role="table">
                         <thead>
                             <tr>
@@ -79,7 +79,7 @@
                                     <td>
                                         <div class="btn-group btn-group-sm">
                                             @if (has_permission("admin.categories.edit"))
-                                                <a class="btn btn-primary" href="{{ route("admin.categories.edit", $item->id) }}"><i class="bi bi-pencil-square"></i></a>
+                                                <a class="btn btn-primary" href="{{ route("admin.products.edit", $item->id) }}"><i class="bi bi-pencil-square"></i></a>
                                             @endif
                                             @if (has_permission("admin.categories.delete"))
                                                 <button class="btn btn-danger delete_btn" data-id="{{ $item->id }}"><i class="bi bi-trash"></i></button>

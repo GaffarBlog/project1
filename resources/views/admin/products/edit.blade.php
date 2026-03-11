@@ -5,15 +5,15 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h3 class="mb-0">Edit Category</h3>
+                    <h3 class="mb-0">Edit Product</h3>
                 </div>
                 <div class="col-sm-6">
                     <div class="text-end">
-                        @if (has_permission("admin.categories.view"))
-                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.categories.view") }}">Categories List</a>
-                        @endif
                         @if (has_permission("admin.products.view"))
-                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.products.view") }}">Products</a>
+                            <a class="btn btn-info btn-sm text-light me-2" href="{{ route("admin.products.view") }}">Products List</a>
+                        @endif
+                        @if (has_permission("admin.categories.view"))
+                            <a class="btn btn-info btn-sm text-light" href="{{ route("admin.categories.view") }}">Categories</a>
                         @endif
                     </div>
                 </div>
@@ -26,56 +26,220 @@
             <div class="card card-primary card-outline mb-4">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
-                        <div class="card-title">Edit Category</div>
+                        <div class="card-title">Product Form</div>
                     </div>
                 </div>
                 <div class="card-body p-3 pb-3">
-                    <form action="{{ route("admin.categories.update") }}" enctype="multipart/form-data" method="POST">
+                    <form action="{{ route("admin.products.update", ["id" => $product->id]) }}" enctype="multipart/form-data" method="POST">
                         @csrf
-                        <input name="id" type="hidden" value="{{ $category->id }}">
                         <div class="row row-gap-3">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="categoryName">Category Name</label>
-                                    <input class="form-control" id="categoryName" name="name" required type="text" value="{{ old("name", $category->name) }}">
-                                </div>
-                            </div>
-                            @if ($category->parent_id)
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label" for="parentCategory">Parent Category</label>
-                                        <select class="form-control" id="parentCategory" name="parent_id">
-                                            <option value="">Select Parent Category</option>
-                                            @foreach ($categories as $cat)
-                                                <option @selected($category->parent_id === $cat->id) value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                            @endforeach
-                                        </select>
+
+                            {{-- SECTION: Basic Information --}}
+                            <div class="col-md-12">
+                                <div class="d-flex align-items-center justify-content-between border-bottom border-secondary pb-2">
+                                    <h6 class="text-muted fw-semibold">Basic Information</h6>
+                                    <div class="toggle-switch">
+                                        <input @checked(old("is_featured", $product->is_featured)) id="isFeatured" name="is_featured" type="checkbox" value="true">
+                                        <label for="isFeatured"></label>
+                                        <span>Mark as Featured Product</span>
                                     </div>
                                 </div>
-                            @endif
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" for="userStatus">Status</label>
-                                    <select class="form-control" id="userStatus" name="status" required>
-                                        <option value="">Select Status</option>
-                                        <option @selected($category->status === "Active") value="Active">Active</option>
-                                        <option @selected($category->status === "Inactive") value="Inactive">Inactive</option>
-                                        <option @selected($category->status === "Banned") value="Banned">Banned</option>
+                                    <label class="form-label" for="productTitle">Title <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="productTitle" name="title" placeholder="e.g. Cotton Summer Shirt" required type="text" value="{{ old("title", $product->title) }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="productSlug">Slug <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="productSlug" name="slug" required type="text" value="{{ old("slug", $product->slug) }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="productSku">SKU <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="productSku" name="sku" placeholder="Product SKU" required type="text" value="{{ old("sku", $product->sku) }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Unit <span class="text-danger">*</span></label>
+                                    <select class="form-control" name="unit_id">
+                                        <option disabled selected>Select Unit</option>
+                                        @foreach ($units as $unit)
+                                            <option @selected(old("unit_id", $product->unit_id) == $unit->id) value="{{ $unit->id }}">{{ $unit->name }} ({{ $unit->abbreviation }})</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" for="categoryBanner">Category Banner</label>
-                                    <input class="form-control imageInput" data-target="categoryBannerPreview" id="categoryBanner" name="banner" type="file">
-
-                                    <img class="img-thumbnail img-preview" id="categoryBannerPreview" src="{{ isset($category->images["webp"]) ? $category->images["webp"] : asset("assets/img/user-avatar.png") }}">
+                                    <label class="form-label">Category <span class="text-danger">*</span></label>
+                                    <select class="form-control product_category" name="category_id">
+                                        <option disabled selected>Select Category</option>
+                                        @foreach ($categories as $item)
+                                            <option @selected(old("category_id", $product->category_id) == $item->id) value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Subcategory <span class="text-danger">*</span></label>
+                                    <select class="form-control product_subcategories" name="subcategory_id">
+                                        <option disabled selected>Select Category First</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="productShortDesc">Short Description <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" name="short_description" placeholder="Brief summary shown in product listings..." rows="3">{{ old("short_description", $product->short_description) }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="productDesc">Full Description</label>
+                                    <textarea id="summernote" name="description" placeholder="Detailed product description...">{{ old("description", $product->description) }}</textarea>
+                                </div>
+                            </div>
+
+                            {{-- SECTION: Pricing --}}
+                            <div class="col-md-12 mt-5">
+                                <h6 class="text-muted fw-semibold border-bottom border-secondary mb-2 mt-2 pb-2">Pricing & Discount</h6>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="productPrice">Original Price <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="productPrice" name="price" placeholder="0.00" required type="number" value="{{ old("price", $product->price) }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="productDiscountType">Discount Type</label>
+                                    <select class="form-control" id="productDiscountType" name="discount_type">
+                                        <option disabled selected>Select Discount Type</option>
+                                        <option @selected(old("discount_type", $product->discount_type) === "percentage") value="percentage">Percentage (%)</option>
+                                        <option @selected(old("discount_type", $product->discount_type) === "fixed") value="fixed">Fixed Amount</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="productDiscount">Discount Value</label>
+                                    <input class="form-control" id="productDiscount" name="discount" placeholder="0" type="number" value="{{ old("discount", $product->discount) }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Discount Start Date</label>
+                                    <input class="form-control" name="discount_start_date" type="date" value="{{ old("discount_start_date", $product->discount_start_date) }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Discount End Date</label>
+                                    <input class="form-control" name="discount_end_date" type="date" value="{{ old("discount_end_date", $product->discount_end_date) }}">
+                                </div>
+                            </div>
+
+                            {{-- SECTION: Inventory --}}
+                            <div class="col-md-12 mt-5">
+                                <h6 class="text-muted fw-semibold border-bottom border-secondary mb-2 mt-2 pb-2">Inventory</h6>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Quantity in Stock</label>
+                                    <input class="form-control" name="quantity" placeholder="0" type="number" value="{{ old("quantity", $product->quantity) }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Low Stock Alert Threshold</label>
+                                    <input class="form-control" name="low_stock_threshold" placeholder="5" type="number" value="{{ old("low_stock_threshold", $product->low_stock_threshold) }}">
+                                    <small class="text-muted">You'll be alerted when stock drops below this number.</small>
+                                </div>
+                            </div>
+
+                            {{-- SECTION: Shipping --}}
+                            <div class="col-md-12 mt-5">
+                                <h6 class="text-muted fw-semibold border-bottom border-secondary mb-2 mt-2 pb-2">Shipping</h6>
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label class="form-label" for="shippingCost">Shipping Cost</label>
+                                    <input class="form-control" id="shippingCost" name="shipping_cost" type="number" value="{{ old("shipping_cost", $product->shipping_cost) }}">
+                                </div>
+                                <div class="form-group mt-3">
+                                    <label class="form-label">Shipping Note</label>
+                                    <textarea class="form-control" name="shipping_note" rows="3">{{ old("shipping_note", $product->shipping_note) }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center gap-5">
+                                    <div class="toggle-switch">
+                                        <input @checked(old("is_free_shipping", $product->is_free_shipping)) id="isFreeShipping" name="is_free_shipping" type="checkbox" value="true">
+                                        <label for="isFreeShipping"></label>
+                                        <span>Free Shipping</span>
+                                    </div>
+                                    <div class="toggle-switch">
+                                        <input @checked(old("is_multiple_by_quantity", $product->is_multiple_by_quantity)) id="is_multiple_by_quantity" name="is_multiple_by_quantity" type="checkbox" value="true">
+                                        <label for="is_multiple_by_quantity"></label>
+                                        <span>Is Multiple By Quantity</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {{-- SECTION: Warranty --}}
+                            <div class="col-md-12 mt-5">
+                                <h6 class="text-muted fw-semibold border-bottom border-secondary mb-2 mt-2 pb-2">Warranty</h6>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Warranty</label>
+                                    <textarea class="form-control" name="warranty" rows="3">{{ old("warranty", $product->warranty) }}</textarea>
+                                </div>
+                            </div>
+
+                            {{-- SECTION: Visibility & SEO --}}
+                            <div class="col-md-12 mt-5">
+                                <h6 class="text-muted fw-semibold border-bottom border-secondary mb-2 mt-2 pb-2">Visibility & SEO</h6>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" for="categoryDescription">Description</label>
-                                    <textarea class="form-control" id="categoryDescription" name="description" rows="5">{{ old("description", $category->description) }}</textarea>
+                                    <label class="form-label">Tags <small class="text-muted">(comma separated)</small></label>
+                                    <input class="form-control" name="tags" placeholder="shirt, cotton, summer" type="text" value="{{ old("tags", $product->tags) }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Meta Title</label>
+                                    <input class="form-control" name="meta_title" placeholder="SEO-friendly title for search engines" type="text" value="{{ old("meta_title", $product->meta_title) }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Meta Description</label>
+                                    <textarea class="form-control" name="meta_description" placeholder="Brief description shown in search engine results..." rows="3">{{ old("meta_description", $product->meta_description) }}</textarea>
                                 </div>
                             </div>
 
@@ -89,3 +253,25 @@
         </div>
     </section>
 @endsection
+
+@push("js")
+    {{-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> --}}
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+    <script>
+        let subcategory_id = @JSON(old("subcategory_id", $product->subcategory_id));
+        let category_id = @JSON(old("category_id", $product->category_id));
+        $(document).ready(function() {
+            $('#summernote').summernote();
+        });
+    </script>
+    <script src="{{ asset("js/admin/products/products.js") }}"></script>
+@endpush
+
+@push("css")
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
+    {{-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> --}}
+@endpush

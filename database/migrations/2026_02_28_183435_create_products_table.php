@@ -35,8 +35,7 @@ return new class extends Migration
             $table->text('warranty')->nullable();
             $table->boolean('is_free_shipping')->default(false);
             $table->boolean('is_multiple_by_quantity')->default(false);
-            $table->enum('shipping_type', ['Normal', 'Express'])->default('Normal');
-            $table->decimal('cost', 10, 2)->default(0);
+            $table->decimal('shipping_cost', 10, 2)->default(0);
             $table->integer('estimated_delivery_time')->default(0);
             $table->string('shipping_note')->nullable();
             $table->unsignedBigInteger('unit_id')->nullable();

@@ -3,7 +3,10 @@ $(document).ready(function () {
         const category_id = $(this).val();
         get_subcategories(category_id);
     });
-    get_subcategories(category_id, subcategory_id);
+    if (category_id) {
+        get_subcategories(category_id, subcategory_id);
+    }
+
     function get_subcategories(category_id, subcategory_id = null) {
         $.ajax({
             url: route("admin.products.subcategories", {
@@ -21,6 +24,16 @@ $(document).ready(function () {
             },
         });
     }
-    // Genereate SKU
-    $(".generate-sku").on("click", function () {});
+    // Select both checkboxes by their IDs
+    $("#isFreeShipping, #is_multiple_by_quantity").on("change", function () {
+        console.log($(this).attr("name"));
+
+        if ($(this).is(":checked")) {
+            // Uncheck the other checkbox if this one is checked
+            $("#isFreeShipping, #is_multiple_by_quantity").not(this).prop("checked", false);
+            if ($(this).attr("name") === "is_free_shipping") {
+                $("#shippingCost").val(0);
+            }
+        }
+    });
 });

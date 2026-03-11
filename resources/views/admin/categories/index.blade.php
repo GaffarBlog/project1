@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body p-0 pb-3">
+                <div class="card-body overflow-x-auto p-0 pb-3">
                     <table class="table-bordered table-hover dataTable dtr-inline table" role="table">
                         <thead>
                             <tr>
@@ -93,7 +93,7 @@
                                         @if ($item->parent_id)
                                             {{ $item->name }}
                                         @else
-                                            <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex justify-content-between align-items-center gap-2">
                                                 <a href="{{ route("admin.categories.view", ["parent_id" => $item->id]) }}">{{ $item->name }}</a>
                                                 <span class="badge text-bg-info text-white">{{ $item->subcategories_count ?? 0 }}</span>
                                             </div>
@@ -126,27 +126,6 @@
                     <div class="mt-3 px-2">
                         {{ $categories->links() }}
                     </div>
-                </div>
-            </div>
-            <div class="card card-primary card-outline">
-                <div class="card-header">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button aria-controls="home" aria-selected="true" class="nav-link active" data-bs-target="#home" data-bs-toggle="tab" id="home-tab" role="tab" type="button">Home</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button aria-controls="profile" aria-selected="false" class="nav-link" data-bs-target="#profile" data-bs-toggle="tab" id="profile-tab" role="tab" type="button">Profile</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button aria-controls="contact" aria-selected="false" class="nav-link" data-bs-target="#contact" data-bs-toggle="tab" id="contact-tab" role="tab" type="button">Contact</button>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="tab-content" id="myTabContent">
-                    <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">...</div>
-                    <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">...</div>
-                    <div aria-labelledby="contact-tab" class="tab-pane fade" id="contact" role="tabpanel">...</div>
                 </div>
             </div>
         </div>

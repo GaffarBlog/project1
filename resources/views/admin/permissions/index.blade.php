@@ -26,7 +26,7 @@
                         <div class="card-title">Role: {{ $role->name }}</div>
                     </div>
                 </div>
-                <div class="card-body p-3 pb-3">
+                <div class="card-body overflow-x-auto p-3 pb-3">
                     @php
                         $maxChildren = $routes->max(fn($item) => $item->Childrens->count());
                     @endphp

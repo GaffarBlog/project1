@@ -28,10 +28,12 @@ class Product extends Model
         'meta_title',
         'meta_description',
         'tags',
-        'is_warranty',
-        'warranty_id',
+        'warranty',
         'is_free_shipping',
-        'shipping_id',
+        'is_multiple_by_quantity',
+        'shipping_cost',
+        'estimated_delivery_time',
+        'shipping_note',
         'unit_id',
     ];
 
